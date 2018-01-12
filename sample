@@ -1,0 +1,4 @@
+var x = prompt("Enter a number:"),
+      y = prompt("Enter another number:"),
+      z = Math.sqrt(x * x + y * y);
+  alert(z);
