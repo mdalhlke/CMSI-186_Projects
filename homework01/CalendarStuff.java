@@ -107,7 +107,7 @@ public class CalendarStuff {
    * @return          boolean which is true if the two dates are exactly the same
    */
    public static boolean dateEquals( long month1, long day1, long year1, long month2, long day2, long year2 ) {
-      return true;  // replace this with the actual code
+      return day1 == day2 && month1 == month2 && year1 == year2;  
    }
 
   /**
