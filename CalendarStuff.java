@@ -85,7 +85,15 @@ public class CalendarStuff {
    *         be decremented to make the appropriate index value
    */
    public static long daysInMonth( long month, long year ) {
-      return 33;  // replace this with the actual code    
+      // find the months that have fixed 31 days 
+      if ( month == 1 || month == 3 || month == 5 || month == 7 || month == 8 || month == 10 || month == 12 ) return 31;
+      // find the months that have fixed 30 days
+      else if ( month == 4 || month == 6 || month == 9 || month == 11 ) return 30;
+      // on leap year feb. has 29 days on leap year and 28 normally, so we have to calculate which  
+      else if ( isLeapYear ( year ) && month == 2 ) return 29;
+      else if ( month == 2 ) return 28;
+      // if none then return 0
+      else return 0;     
    }
 
   /**
