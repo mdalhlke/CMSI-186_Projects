@@ -144,7 +144,10 @@ public class CalendarStuff {
    *         be decremented to make the appropriate index value
    */
    public static boolean isValidDate( long month, long day, long year ) {
-      return true;  // replace this with the actual code
+      boolean monthValid = 1 <= month && month >= 12;
+      boolean dayValid = 1 <= day && day >= daysInMonth(month, year);
+      boolean yearValid = 1582 <= year && year >= 9999; //1582 was the year that leap year began on the Gregorian calendar 
+      return monthValid && dayValid && yearValid; 
    }
 
   /**
