@@ -121,7 +121,17 @@ public class CalendarStuff {
    * @return          int    -1/0/+1 if first date is less than/equal to/greater than second
    */
    public static int compareDate( long month1, long day1, long year1, long month2, long day2, long year2 ) {
-      return 0;  // replace this with the actual code
+     if ( year1 > year2 ) return 1;        // if first year greater than second year
+     else if ( year1 < year2 ) return -1;  // if first year less than second year 
+     else {                                // years are the same
+      if ( month1 > month2 ) return 1;
+        else if ( month1 < month2) return -1;
+        else {
+          if ( day1 > day2 ) return 1;
+            else if ( day1 < day2 ) return -1;
+             else return 0;               //the dates are the same
+             }
+          } 
    }
 
   /**
