@@ -3,8 +3,8 @@
  *  Purpose       :  Provides a tester class to test the methods in the CalendarStuff class
  *  Author        :  B.J. Johnson (prototype)
  *  Date          :  2017-01-02 (prototype)
- *  Author        :  <your name here>
- *  Date          :  <date of writing here>
+ *  Author        :  Maya Dahlke
+ *  Date          :  Jan 21 2018
  *  Description   :  This file provides the "test harness" for checking out the methods which are part of
  *                   the homework01 assignment.  It also provides examples of proper documentation, and
  *                   uses the source file header template as specified in the "Greeter.java" template file
