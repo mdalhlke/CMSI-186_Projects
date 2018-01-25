@@ -58,6 +58,18 @@ public class CalendarStuff {
    *  NOTE: this is optional, but suggested
    */
    private static int[]    days        = { 31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31 };
+   
+   /**
+   * An array containing the names of the months
+   *  
+   */
+   private static String[] months      = { "January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December" };
+
+   /**
+   * An array containing the names of the days
+   *  
+   */
+   private static String[] dayOfWeek   = { "Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday" };
 
   /**
    * The constructor for the class
@@ -93,8 +105,9 @@ public class CalendarStuff {
       else if ( isLeapYear ( year ) && month == 2 ) return 29;
       else if ( month == 2 ) return 28;
       // if none then return 0
-      else return 0;     
+      else return 0; 
    }
+ 
 
   /**
    * A method to determine if two dates are exactly equal
@@ -107,7 +120,7 @@ public class CalendarStuff {
    * @return          boolean which is true if the two dates are exactly the same
    */
    public static boolean dateEquals( long month1, long day1, long year1, long month2, long day2, long year2 ) {
-      return day1 == day2 && month1 == month2 && year1 == year2;  
+     return day1 == day2 && month1 == month2 && year1 == year2; 
    }
 
   /**
@@ -130,8 +143,8 @@ public class CalendarStuff {
           if ( day1 > day2 ) return 1;
             else if ( day1 < day2 ) return -1;
              else return 0;               //the dates are the same
-             }
-          } 
+        }
+     } 
    }
 
   /**
@@ -144,9 +157,9 @@ public class CalendarStuff {
    *         be decremented to make the appropriate index value
    */
    public static boolean isValidDate( long month, long day, long year ) {
-      boolean monthValid = 1 <= month && month >= 12;
-      boolean dayValid = 1 <= day && day >= daysInMonth(month, year);
-      boolean yearValid = 1582 <= year && year >= 9999; //1582 was the year that leap year began on the Gregorian calendar 
+      boolean monthValid = 1 <= month && month <= 12;
+      boolean dayValid = 1 <= day && day <= daysInMonth(month, year);
+      boolean yearValid = 1582 <= year && year <= 9999; // 1582 was the year that leap year began on the Gregorian calendar
       return monthValid && dayValid && yearValid; 
    }
 
@@ -157,6 +170,19 @@ public class CalendarStuff {
    */
    public static String toMonthString( int month ) {
       switch( month - 1 ) {
+         case 0: 
+         case 1:
+         case 2:
+         case 3:
+         case 4:
+         case 5:
+         case 6:
+         case 7:
+         case 8:
+         case 9:
+         case 10:
+         case 11:
+           return months[month - 1]; 
          default: throw new IllegalArgumentException( "Illegal month value given to 'toMonthString()'." );
       }
    }
@@ -168,9 +194,35 @@ public class CalendarStuff {
    */
    public static String toDayOfWeekString( int day ) {
       switch( day - 1 ) {
-         default       : throw new IllegalArgumentException( "Illegal day value given to 'toDayOfWeekString()'." );
+         case 0: 
+         case 1:
+         case 2:
+         case 3:
+         case 4:
+         case 5:
+         case 6:
+           return dayOfWeek[day - 1];
+         default: throw new IllegalArgumentException( "Illegal day value given to 'toDayOfWeekString()'." );
       }
    }
+
+ /**
+   * A method to count the number of days in a year (used in dayBetween method)
+   */
+  public static long daysInYear( long day1, long month1, long day2, long month2, long year ) {
+    long dayCount = 0;
+    if ( month1 == month2 ) {
+     dayCount = day2 - day1;
+     } else {
+     // month2 > month1
+        for ( long m = month1 + 1; m < month2; m++ ) {
+        dayCount += daysInMonth( m, year );
+        }
+        dayCount += daysInMonth( month1, year ) - day1;
+        dayCount +=  day2; // from month2
+     }
+     return dayCount;
+  } 
 
   /**
    * A method to return a count of the total number of days between two valid dates
@@ -183,8 +235,24 @@ public class CalendarStuff {
    * @return          long   count of total number of days
    */
    public static long daysBetween( long month1, long day1, long year1, long month2, long day2, long year2 ) {
-      long dayCount = 0;
+      long dayCount = 0; 
+      //if the dates are switched
+      if ( compareDate ( month1, day1, year1, month2, day2, year2 ) == 1 ) {
+        dayCount = daysBetween( month2, day2, year2, month1, day1, year1 );
+        return dayCount;
+      }
+
+      if ( year1 == year2 ) {
+        dayCount = daysInYear ( day1, month1, day2, month2, year1 );
+      } else {
+      // year2 > year1
+        for ( long y = year1 + 1; y < year2; y++ ) {
+          dayCount += isLeapYear ( y ) ? 366 : 365; // all full years
+        }
+        dayCount += daysInYear ( day1, month1, 31, 12, year1 );
+        dayCount += daysInYear ( 0, 1, day2, month2, year2 );
+      } 
       return dayCount;
-   }
+   } 
 
 }
