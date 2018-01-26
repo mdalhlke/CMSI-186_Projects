@@ -98,12 +98,12 @@ public class CalendarStuff {
    */
    public static long daysInMonth( long month, long year ) {
       // find the months that have fixed 31 days 
-      if ( month == 1 || month == 3 || month == 5 || month == 7 || month == 8 || month == 10 || month == 12 ) return 31;
+      if( month == 1 || month == 3 || month == 5 || month == 7 || month == 8 || month == 10 || month == 12 ) return 31;
       // find the months that have fixed 30 days
-      else if ( month == 4 || month == 6 || month == 9 || month == 11 ) return 30;
+      else if( month == 4 || month == 6 || month == 9 || month == 11 ) return 30;
       // on leap year feb. has 29 days on leap year and 28 normally, so we have to calculate which  
-      else if ( isLeapYear ( year ) && month == 2 ) return 29;
-      else if ( month == 2 ) return 28;
+      else if( isLeapYear( year ) && month == 2 ) return 29;
+      else if( month == 2 ) return 28;
       // if none then return 0
       else return 0; 
    }
@@ -134,14 +134,14 @@ public class CalendarStuff {
    * @return          int    -1/0/+1 if first date is less than/equal to/greater than second
    */
    public static int compareDate( long month1, long day1, long year1, long month2, long day2, long year2 ) {
-     if ( year1 > year2 ) return 1;        // if first year greater than second year
-     else if ( year1 < year2 ) return -1;  // if first year less than second year 
+     if( year1 > year2 ) return 1;        // if first year greater than second year
+     else if( year1 < year2 ) return -1;  // if first year less than second year 
      else {                                // years are the same
-      if ( month1 > month2 ) return 1;
-        else if ( month1 < month2) return -1;
+      if( month1 > month2 ) return 1;
+        else if( month1 < month2) return -1;
         else {
-          if ( day1 > day2 ) return 1;
-            else if ( day1 < day2 ) return -1;
+          if( day1 > day2 ) return 1;
+            else if( day1 < day2 ) return -1;
              else return 0;               //the dates are the same
         }
      } 
@@ -211,11 +211,11 @@ public class CalendarStuff {
    */
   public static long daysInYear( long day1, long month1, long day2, long month2, long year ) {
     long dayCount = 0;
-    if ( month1 == month2 ) {
+    if( month1 == month2 ) {
      dayCount = day2 - day1;
      } else {
      // month2 > month1
-        for ( long m = month1 + 1; m < month2; m++ ) {
+        for( long m = month1 + 1; m < month2; m++ ) {
         dayCount += daysInMonth( m, year );
         }
         dayCount += daysInMonth( month1, year ) - day1;
@@ -237,20 +237,20 @@ public class CalendarStuff {
    public static long daysBetween( long month1, long day1, long year1, long month2, long day2, long year2 ) {
       long dayCount = 0; 
       //if the dates are switched
-      if ( compareDate ( month1, day1, year1, month2, day2, year2 ) == 1 ) {
+      if( compareDate( month1, day1, year1, month2, day2, year2 ) == 1 ) {
         dayCount = daysBetween( month2, day2, year2, month1, day1, year1 );
         return dayCount;
       }
 
-      if ( year1 == year2 ) {
-        dayCount = daysInYear ( day1, month1, day2, month2, year1 );
+      if( year1 == year2 ) {
+        dayCount = daysInYear( day1, month1, day2, month2, year1 );
       } else {
       // year2 > year1
-        for ( long y = year1 + 1; y < year2; y++ ) {
-          dayCount += isLeapYear ( y ) ? 366 : 365; // all full years
+        for( long y = year1 + 1; y < year2; y++ ) {
+          dayCount += isLeapYear( y ) ? 366 : 365; // all full years
         }
-        dayCount += daysInYear ( day1, month1, 31, 12, year1 );
-        dayCount += daysInYear ( 0, 1, day2, month2, year2 );
+        dayCount += daysInYear( day1, month1, 31, 12, year1 );
+        dayCount += daysInYear( 0, 1, day2, month2, year2 );
       } 
       return dayCount;
    } 
