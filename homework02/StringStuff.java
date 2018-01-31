@@ -3,6 +3,8 @@
  *  Purpose       :  A file full of stuff to do with the Java String class
  *  Author        :  B.J. Johnson
  *  Date          :  2017-01-19
+ *  Author        :  Maya Dahlke
+ *  Date          :  2017-01-30
  *  Description   :  This file presents a bunch of String-style helper methods.  Although pretty much
  *                   any and every thing you'd want to do with Strings is already made for you in the
  *                   Jave String class, this exercise gives you a chance to do it yourself [DIY] for some
@@ -33,6 +35,14 @@ public class StringStuff {
    * @return  boolean which is true if there is a vowel, or false otherwise
    */
    public static boolean containsVowel( String s ) {
+      String word = s.toLowerCase();
+      char[] words = word.toCharArray();
+      for( int i = 0; i < words.length; i++ ) {
+          char arr = words[i];
+          if( arr == 'a' || arr == 'e'|| arr == 'i'|| arr == 'o' || arr == 'u' || arr == 'y' ) {
+              return true;
+          }
+      }       
       return false;
    }
 
