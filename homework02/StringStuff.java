@@ -55,7 +55,17 @@ public class StringStuff {
    * @return  boolean which is true if this a palindrome, or false otherwise
    */
    public static boolean isPalindrome( String s ) {
-      return true;
+       char[] arr = s.toCharArray();
+       char[] palindrome = new char[arr.length];
+       int pos = 0;
+       for(int i = arr.length - 1; i >= 0; i--) {
+           palindrome[pos] = s.charAt(i);
+           pos++;
+       }  
+       String pal = String.valueOf(palindrome);
+       if( s.contains(pal) ) { return true; }
+           else return false;
+
    }
 
   /**
