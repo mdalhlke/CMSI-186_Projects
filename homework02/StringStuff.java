@@ -169,25 +169,31 @@ public class StringStuff {
    }
 
   /**
-   * test method to test out the operation of the removeDupes method
+   * Main method to test the methods in this class
+   *
+   * @param args String array containing command line parameters
    */
-   //public static void test_removeDupes() {
-   //   System.out.println( "\nFOUR TESTS FOR removeDupes():" );
-   //   System.out.print( "   Testing 'xylophones' should return xylophnes: " );
-   //   try { System.out.println( (0 == StringStuff.removeDupes( "xylophones" ).compareTo( "xylophnes" )) ? "got it" : "don't got it" ); }
-   //   catch( Exception e ) { System.out.println ( false ); }
-
-   //   System.out.print( "   Testing 'XYloPHonES' should return XYloPHnES: " );
-   //   try { System.out.println( (0 == StringStuff.removeDupes( "XYloPHonES" ).compareTo("XYloPHnES")) ? "got it" : "don't got it" ); }
-   //   catch( Exception e ) { System.out.println ( false ); }
-
-    //  System.out.print( "   Testing 'AmanAplanAcAnalpAnamA' should return Amanplc: " );
-    //  try { System.out.println( (0 == StringStuff.removeDupes( "AmanAplanAcAnalpAnamA" ).compareTo("Amanplc")) ? "got it" : "don't got it" ); }
-    //  catch( Exception e ) { System.out.println ( false ); }
-
-     // System.out.print( "   Testing 'shutTheFrontDoor11233455677890' should return shutTeFronD1234567890: " );
-     // try { System.out.println( (0 == StringStuff.removeDupes( "shutTheFrontDoor11234567890" ).compareTo("shutTeFronD1234567890")) ? "got it" : "don't got it" ); }
-     // catch( Exception e ) { System.out.println ( false ); }
-
-   //}
+   public static void main( String args[] ) {
+      String blah = new String( "Blah blah blah" );
+      String woof = new String( "BCDBCDBCDBCDBCD" );
+      String pal1 = new String( "a" );
+      String pal2 = new String( "ab" );
+      String pal3 = new String( "aba" );
+      String pal4 = new String( "amanaplanacanalpanama" );
+      String pal5 = new String( "abba" );
+      System.out.println( containsVowel( blah ) );
+      System.out.println( containsVowel( woof ) );
+      System.out.println( isPalindrome( pal1 ) );
+      System.out.println( isPalindrome( pal2 ) );
+      System.out.println( isPalindrome( pal3 ) );
+      System.out.println( isPalindrome( pal4 ) );
+      System.out.println( isPalindrome( pal5 ) );
+      System.out.println( "evensOnly()        returns: " + evensOnly( "REHEARSALSZ" ) );
+      System.out.println( "evensOnly()        returns: " + evensOnly( "REhearSALsz" ) );
+      System.out.println( "evensOnlyNoDupes() returns: " + evensOnlyNoDupes( "REhearSALsz" ) );
+      System.out.println( "oddsOnly()         returns: " + oddsOnly( "xylophones" ) );
+      System.out.println( "oddsOnly()         returns: " + oddsOnly( "XYloPHonES" ) );
+      System.out.println( "oddsOnlyNoDupes()  returns: " + oddsOnlyNoDupes( "XYloPHonES" ) );
+      System.out.println( "reverse()          returns: " + reverse( "REHEARSALSZ" ) );
+   }
 }
