@@ -123,8 +123,21 @@ public class StringStuff {
    * @param s String containing the data to be parsed for &quot;odd&quot; letters
    * @return  String containing the &quot;odd&quot; letters from the input without duplicates
    */
-   public static String oddsOnlyNoDupes( String s ) {
-      return new String( "IK" );
+   public static String oddsOnly( String s ) {
+      //making the odd letters in the alphabet into an array
+       String alphaOdd = "acegikmoqsuwyACEGIKMOQSUWY";
+       char[] alphArr = alphaOdd.toCharArray();
+       //making s an array
+       char[] arr = s.toCharArray();
+       StringBuffer result = new StringBuffer(); 
+       for(int i = 0; i < arr.length; i++) {
+           for(int j = 0; j < alphArr.length; j++) {
+               if(arr[i] == alphArr[j]) {
+                   result.append(arr[i]);
+               }
+           }
+       }   
+       return result.toString();
    }
 
   /**
