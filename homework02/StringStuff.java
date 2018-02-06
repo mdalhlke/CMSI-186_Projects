@@ -102,28 +102,6 @@ public class StringStuff {
    * @return  String containing the &quot;odd&quot; letters from the input
    */
    public static String oddsOnly( String s ) {
-      return new String( "IKIKIK" );
-   }
-
-  /**
-   * Method to return the characters in a string that correspond to the &quot;EVEN&quot; index
-   * numbers of the alphabet, but with no duplicate characters in the resulting string.
-   *
-   * @param s String containing the data to be parsed for &quot;even&quot; letters
-   * @return  String containing the &quot;even&quot; letters from the input without duplicates
-   */
-   public static String evensOnlyNoDupes( String s ) {
-      return new String( "HJ" );
-   }
-
-  /**
-   * Method to return the characters in a string that correspond to the &quot;ODD&quot; index
-   * numbers of the alphabet, but with no duplicate characters in the resulting string.
-   *
-   * @param s String containing the data to be parsed for &quot;odd&quot; letters
-   * @return  String containing the &quot;odd&quot; letters from the input without duplicates
-   */
-   public static String oddsOnly( String s ) {
       //making the odd letters in the alphabet into an array
        String alphaOdd = "acegikmoqsuwyACEGIKMOQSUWY";
        char[] alphArr = alphaOdd.toCharArray();
@@ -138,6 +116,44 @@ public class StringStuff {
            }
        }   
        return result.toString();
+   }
+
+  /**
+   * Method to return the characters in a string that correspond to the &quot;EVEN&quot; index
+   * numbers of the alphabet, but with no duplicate characters in the resulting string.
+   *
+   * @param s String containing the data to be parsed for &quot;even&quot; letters
+   * @return  String containing the &quot;even&quot; letters from the input without duplicates
+   */
+   public static String evensOnlyNoDupes( String s ) {
+      String evenWords = evensOnly(s);
+      StringBuffer result = new StringBuffer();
+      for(int i = 0; i < evenWords.length(); i++) {
+          String letter = evenWords.valueOf(evenWords.charAt(i));
+          if(result.indexOf(letter) == -1) {
+            result.append(letter);
+          }
+      }
+      return result.toString(); 
+   }
+
+  /**
+   * Method to return the characters in a string that correspond to the &quot;ODD&quot; index
+   * numbers of the alphabet, but with no duplicate characters in the resulting string.
+   *
+   * @param s String containing the data to be parsed for &quot;odd&quot; letters
+   * @return  String containing the &quot;odd&quot; letters from the input without duplicates
+   */
+   public static String oddsOnlyNoDupes( String s ) {
+      String oddWords = oddsOnly(s);
+      StringBuffer result = new StringBuffer();
+      for(int i = 0; i < oddWords.length(); i++) {
+          String letter = oddWords.valueOf(oddWords.charAt(i));
+          if(result.indexOf(letter) == -1) {
+            result.append(letter);
+          }
+      }
+      return result.toString(); 
    }
 
   /**
