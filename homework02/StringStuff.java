@@ -77,7 +77,20 @@ public class StringStuff {
    * @return  String containing the &quot;even&quot; letters from the input
    */
    public static String evensOnly( String s ) {
-      return new String( "HJHJHJ" );
+       //making the even letters in the alphabet into an array
+       String alphaEven = "bdfhjlnprtvxzBDFHJLNPRTVXZ";
+       char[] alphArr = alphaEven.toCharArray();
+       //making s an array
+       char[] arr = s.toCharArray();
+       StringBuffer result = new StringBuffer(); 
+       for(int i = 0; i < arr.length; i++) {
+           for(int j = 0; j < alphArr.length; j++) {
+               if(arr[i] == alphArr[j]) {
+                   result.append(arr[i]);
+               }
+           }
+       }   
+       return result.toString();
    }
 
   /**
