@@ -35,6 +35,8 @@
  *  @version 1.0.0  2017-02-06  B.J. Johnson  Initial writing and release
  *  @version 1.1.0  2017-02-17  B.J. Johnson  Filled in method code
  * ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ */
+import java.util.Random;
+
 public class Die {
 
   /**
@@ -51,7 +53,12 @@ public class Die {
    * @throws       IllegalArgumentException
    * Note: parameter must be checked for validity; invalid value must throw "IllegalArgumentException"
    */
-   public DieEmpty( int nSides ) {
+   public Die( int nSides ) {
+      if(nSides < MINIMUM_SIDES) {
+          throw new IllegalArgumentException("Number is invalid");
+      } 
+      this.sides = nSides;
+      this.pips = nSides; 
    }
 
   /**
@@ -102,6 +109,22 @@ public class Die {
    */
    public static void main( String[] args ) {
       System.out.println( "Hello world from the Die class..." );
+      //testing the constructor  
+      System.out.print( "Testing 1:" ); 
+      try { Die d = new Die(1); }
+      catch( Exception e ) { System.out.println ( false ); }
+      
+      System.out.println( "Testing 2:" );
+      try { Die d = new Die(2); }
+      catch( Exception e ) { System.out.println ( false ); }
+     
+       System.out.print( "Testing 4:" ); 
+       try { Die d = new Die(4); }
+       catch( Exception e ) { System.out.println ( false ); }
+      
+      System.out.print( "Testing 7:" ); 
+      try { Die d = new Die(7); }
+      catch( Exception e ) { System.out.println ( false ); }
    }
 
 }
