@@ -65,8 +65,9 @@ public class Die {
    * Roll THIS die and return the result
    * @return  integer value of the result of the roll, randomly selected
    */
-   public int roll() {
-      return 0;
+   public int roll() {   //rolls and returns the value 
+      this.pips = (int) (Math.random() * this.sides + 1);
+      return this.pips;
    }
 
   /**
@@ -132,6 +133,54 @@ public class Die {
       System.out.print( "Testing 7 should return 'yeah':" ); 
       try { Die d = new Die(6); System.out.println("yeah");}                                  
       catch( Exception e ) { System.out.println ( "number can't be used" ); }
+     
+     
+     //testing roll() method
+      System.out.println( "Tests for roll(): " ); //rolling n times should give you n values each between 1 and this.sides
+      
+      System.out.print( "Rolling dice w/ 4 sides 5 times should return 5 nums 1-4:  " );
+      try { 
+          Die d = new Die(4); 
+          for (int i = 0; i < 5; i++) { //roll is 5 times
+              if (0 < d.roll() && d.roll() <= 4) { //checking if the number is between 1 and 4
+                  System.out.print( d.roll()+" " );
+              }
+          } System.out.print( "\n" );
+      }   
+      catch( Exception e ) { System.out.println ( "nope" ); }
+
+      System.out.print( "Rolling dice w/ 6 sides 3 times should return 3 nums 1-6:  " );
+      try { 
+          Die d = new Die(6); 
+          for (int i = 0; i < 3; i++) { //roll is 3 times
+              if (0 < d.roll() && d.roll() <= 6) { //checking if the number is between 1 and 6
+                  System.out.print( d.roll()+" " );
+              }
+          } System.out.print( "\n" );
+      }   
+      catch( Exception e ) { System.out.println ( "nope" ); }
+
+      System.out.print( "Rolling dice w/ 7 sides 9 times should return 9 nums 1-7:  " );
+      try { 
+          Die d = new Die(7); 
+          for (int i = 0; i < 9; i++) { //roll is 9 times
+              if (0 < d.roll() && d.roll() <= 7) { //checking if the number is between 1 and 7
+                  System.out.print( d.roll()+" " );
+              }
+          } System.out.print( "\n" );
+      }   
+      catch( Exception e ) { System.out.println ( "nope" ); }
+
+      System.out.print( "Rolling dice w/ 5 sides 2 times should return 2 nums 1-5:  " );
+      try { 
+          Die d = new Die(5); 
+          for (int i = 0; i < 2; i++) { //roll is 2 times
+              if (0 < d.roll() && d.roll() <= 5) { //checking if the number is between 1 and 5
+                  System.out.print( d.roll()+" " );
+              }
+          } System.out.print( "\n" );
+      }   
+      catch( Exception e ) { System.out.println ( "nope" ); }   
    }
 
 }
