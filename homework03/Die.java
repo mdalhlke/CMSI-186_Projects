@@ -58,7 +58,7 @@ public class Die {
           throw new IllegalArgumentException("Number is invalid");
       } 
       this.sides = nSides;
-      this.pips = nSides; 
+      this.pips = this.sides; //side 1 has 1 pip, side 2 has 2 pips, ... , side n has n pips   
    }
 
   /**
@@ -109,22 +109,29 @@ public class Die {
    */
    public static void main( String[] args ) {
       System.out.println( "Hello world from the Die class..." );
-      //testing the constructor  
-      System.out.print( "Testing 1:" ); 
-      try { Die d = new Die(1); }
-      catch( Exception e ) { System.out.println ( false ); }
       
-      System.out.println( "Testing 2:" );
-      try { Die d = new Die(2); }
-      catch( Exception e ) { System.out.println ( false ); }
+     //testing the constructor   
+      System.out.println( "Tests for the constructor: " );
+    
+      System.out.print( "Testing 1 should return 'number can't be used':" ); 
+      try { Die d = new Die(1);  System.out.println(" yeah");}                                   
+      catch( Exception e ) { System.out.println ( "number can't be used" ); }
+      
+      System.out.print( "Testing 2 should return 'number can't be used':" );
+      try { Die d = new Die(2); System.out.println("yeah");}                                     
+      catch( Exception e ) { System.out.println ( "number can't be used" ); }
+
+      System.out.print( "Testing 3 should return 'number can't be used':" );
+      try { Die d = new Die(3); System.out.println("yeah");}                                     
+      catch( Exception e ) { System.out.println ( "number can't be used" ); }
      
-       System.out.print( "Testing 4:" ); 
-       try { Die d = new Die(4); }
-       catch( Exception e ) { System.out.println ( false ); }
+      System.out.print( "Testing 4 should return 'yeah':" ); 
+      try { Die d = new Die(4); System.out.println("yeah"); }                                    
+      catch( Exception e ) { System.out.println ( "number can't be used" ); }
       
-      System.out.print( "Testing 7:" ); 
-      try { Die d = new Die(7); }
-      catch( Exception e ) { System.out.println ( false ); }
+      System.out.print( "Testing 7 should return 'yeah':" ); 
+      try { Die d = new Die(6); System.out.println("yeah");}                                  
+      catch( Exception e ) { System.out.println ( "number can't be used" ); }
    }
 
 }
