@@ -146,7 +146,7 @@ public class Die {
                   System.out.print( d.roll()+" " );
               }
           } System.out.print( "\n" );
-          System.out.print("Testing getValue() - should give last value of above: ");
+          System.out.print("Testing getValue() - should give last value of above:      ");
           System.out.println(d.getValue());
       }   
       catch( Exception e ) { System.out.println ( "nope" ); }
@@ -159,7 +159,7 @@ public class Die {
                   System.out.print( d.roll()+" " );
               }
           } System.out.print( "\n" );
-          System.out.print("Testing getValue() - should give last value of above: ");
+          System.out.print("Testing getValue() - should give last value of above:      ");
           System.out.println(d.getValue());
       }   
       catch( Exception e ) { System.out.println ( "nope" ); }
@@ -172,7 +172,7 @@ public class Die {
                   System.out.print( d.roll()+" " );
               }
           } System.out.print( "\n" );
-          System.out.print("Testing getValue() - should give last value of above: ");
+          System.out.print("Testing getValue() - should give last value of above:      ");
           System.out.println(d.getValue());
       }   
       catch( Exception e ) { System.out.println ( "nope" ); }
@@ -185,7 +185,7 @@ public class Die {
                   System.out.print( d.roll()+" " );
               }
           } System.out.print( "\n" );
-          System.out.print("Testing getValue() - should give last value of above: ");
+          System.out.print("Testing getValue() - should give last value of above:      ");
           System.out.println(d.getValue());
       }   
       catch( Exception e ) { System.out.println ( "nope" ); } 
