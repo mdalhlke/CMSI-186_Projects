@@ -78,7 +78,7 @@ public class Die {
    * @return the pip count of THIS die instance
    */
    public int getValue() {
-      return 0;
+      return this.pips;
    }
 
   /**
@@ -135,8 +135,8 @@ public class Die {
       catch( Exception e ) { System.out.println ( "number can't be used" ); }
      
      
-     //testing roll() method
-      System.out.println( "Tests for roll(): " ); //rolling n times should give you n values each between 1 and this.sides
+     //testing roll() and getValue() method
+      System.out.println( "Tests for roll() and getValue(): " ); //rolling n times should give you n values each between 1 and this.sides
       
       System.out.print( "Rolling dice w/ 4 sides 5 times should return 5 nums 1-4:  " );
       try { 
@@ -146,6 +146,8 @@ public class Die {
                   System.out.print( d.roll()+" " );
               }
           } System.out.print( "\n" );
+          System.out.print("Testing getValue() - should give last value of above: ");
+          System.out.println(d.getValue());
       }   
       catch( Exception e ) { System.out.println ( "nope" ); }
 
@@ -157,6 +159,8 @@ public class Die {
                   System.out.print( d.roll()+" " );
               }
           } System.out.print( "\n" );
+          System.out.print("Testing getValue() - should give last value of above: ");
+          System.out.println(d.getValue());
       }   
       catch( Exception e ) { System.out.println ( "nope" ); }
 
@@ -168,6 +172,8 @@ public class Die {
                   System.out.print( d.roll()+" " );
               }
           } System.out.print( "\n" );
+          System.out.print("Testing getValue() - should give last value of above: ");
+          System.out.println(d.getValue());
       }   
       catch( Exception e ) { System.out.println ( "nope" ); }
 
@@ -179,8 +185,11 @@ public class Die {
                   System.out.print( d.roll()+" " );
               }
           } System.out.print( "\n" );
+          System.out.print("Testing getValue() - should give last value of above: ");
+          System.out.println(d.getValue());
       }   
-      catch( Exception e ) { System.out.println ( "nope" ); }   
+      catch( Exception e ) { System.out.println ( "nope" ); } 
+     
+     
    }
-
 }
