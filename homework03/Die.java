@@ -94,7 +94,8 @@ public class Die {
    * @return String representation of this Die
    */
    public String toString() {
-      return "";
+      String string = Integer.toString(this.sides);
+      return "[" + string + "]";
    }
 
   /**
@@ -188,7 +189,31 @@ public class Die {
           System.out.print("Testing getValue() - should give last value of above:      ");
           System.out.println(d.getValue());
       }   
-      catch( Exception e ) { System.out.println ( "nope" ); } 
+      catch( Exception e ) { System.out.println ( "nope" ); }
+     
+     
+     //testing toString() method
+      System.out.println( "Tests for toString(): " );
+
+      System.out.print( "Should print [7]:   " );
+      try { Die d = new Die(7); System.out.println( d.toString() ); }
+      catch( Exception e ) { System.out.println( false ); } 
+
+      System.out.print( "Should print [4]:   " );
+      try { Die d = new Die(4); System.out.println( d.toString() ); }
+      catch( Exception e ) { System.out.println( false ); } 
+
+      System.out.print( "Should print [8]:   " );
+      try { Die d = new Die(8); System.out.println( d.toString() ); }
+      catch( Exception e ) { System.out.println( false ); } 
+
+      System.out.print( "Should print [10]:  " );
+      try { Die d = new Die(10); System.out.println( d.toString() ); }
+      catch( Exception e ) { System.out.println( false ); } 
+
+      System.out.print( "Should print [5]:   " );
+      try { Die d = new Die(5); System.out.println( d.toString() ); }
+      catch( Exception e ) { System.out.println( false ); }
      
      
    }
