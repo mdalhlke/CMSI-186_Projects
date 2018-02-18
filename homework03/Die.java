@@ -41,7 +41,7 @@ public class Die {
    * private instance data
    */
    private int sides;
-   private int pips;
+   private int pips; //the dots on the dice
    private final int MINIMUM_SIDES = 4;
 
    // public constructor:
@@ -51,15 +51,21 @@ public class Die {
    * @throws       IllegalArgumentException
    * Note: parameter must be checked for validity; invalid value must throw "IllegalArgumentException"
    */
-   public DieEmpty( int nSides ) {
+   public Die( int nSides ) {
+      if(nSides < MINIMUM_SIDES) {
+          throw new IllegalArgumentException("Number is invalid");
+      } 
+      this.sides = nSides; 
+      this.roll();           //pip value 
    }
 
   /**
    * Roll THIS die and return the result
    * @return  integer value of the result of the roll, randomly selected
    */
-   public int roll() {
-      return 0;
+   public int roll() {   //rolls and returns the value //roll it 6 times and get 6 values
+      this.pips = (int) (Math.random() * this.sides + 1);
+      return this.pips;
    }
 
   /**
@@ -69,8 +75,8 @@ public class Die {
    *  "value"?
    * @return the pip count of THIS die instance
    */
-   public int getValue() {
-      return 0;
+   public int getValue() {  //just hands back value and tells you what it is 
+      return this.pips;
    }
 
   /**
@@ -78,15 +84,21 @@ public class Die {
    * @return      The new number of sides, in case anyone is looking
    * @throws      IllegalArgumentException
    */
-   public void setSides( int sides ) {
+   public int setSides( int sides ) { 
+      if(sides < MINIMUM_SIDES) {
+          throw new IllegalArgumentException("Number is invalid");
+      } 
+      this.sides = sides;
+      return sides;
    }
-
+  
   /**
    * Public Instance method that returns a String representation of THIS die instance
    * @return String representation of this Die
    */
    public String toString() {
-      return "";
+      String string = Integer.toString(this.pips);
+      return "[" + string + "]";
    }
 
   /**
@@ -94,7 +106,7 @@ public class Die {
    * @return String representation of this Die
    */
    public static String toString( Die d ) {
-      return "";
+      return d.toString(); 
    }
 
   /**
@@ -102,6 +114,158 @@ public class Die {
    */
    public static void main( String[] args ) {
       System.out.println( "Hello world from the Die class..." );
+    
+      //testing the constructor 
+      System.out.println( "Tests for the constructor: " );
+    
+      System.out.print( "Testing 1 should return 'number can't be used':" ); 
+      try { Die d = new Die(1);  System.out.println(" yeah");}                                   
+      catch( Exception e ) { System.out.println ( " number can't be used" ); }
+      
+      System.out.print( "Testing 2 should return 'number can't be used':" );
+      try { Die d = new Die(2); System.out.println(" yeah");}                                     
+      catch( Exception e ) { System.out.println ( " number can't be used" ); }
+
+      System.out.print( "Testing 3 should return 'number can't be used':" );
+      try { Die d = new Die(3); System.out.println(" yeah");}                                     
+      catch( Exception e ) { System.out.println ( " number can't be used" ); }
+     
+      System.out.print( "Testing 4 should return 'yeah':" ); 
+      try { Die d = new Die(4); System.out.println(" yeah"); }                                    
+      catch( Exception e ) { System.out.println ( " number can't be used" ); }
+      
+      System.out.print( "Testing 7 should return 'yeah':" ); 
+      try { Die d = new Die(6); System.out.println(" yeah");}                                  
+      catch( Exception e ) { System.out.println ( " number can't be used" ); }
+
+
+      //testing roll() and getValue() method
+      System.out.println( "Tests for roll() and getValue(): " ); //rolling n times should give you n values each between 1 and this.sides
+      
+      System.out.print( "Rolling dice w/ 4 sides 5 times should return 5 nums 1-4:  " );
+      try { 
+          Die d = new Die(4); 
+          for (int i = 0; i < 5; i++) { //roll is 5 times
+              if (0 < d.roll() && d.roll() <= 4) { //checking if the number is between 1 and 4
+                  System.out.print( d.roll()+" " );
+              }
+          } System.out.print( "\n" );
+          System.out.print("Testing getValue() - should give last value of above:      ");
+          System.out.println(d.getValue());
+      }   
+      catch( Exception e ) { System.out.println ( "nope" ); }
+
+      System.out.print( "Rolling dice w/ 6 sides 3 times should return 3 nums 1-6:  " );
+      try { 
+          Die d = new Die(6); 
+          for (int i = 0; i < 3; i++) { //roll is 3 times
+              if (0 < d.roll() && d.roll() <= 6) { //checking if the number is between 1 and 6
+                  System.out.print( d.roll()+" " );
+              }
+          } System.out.print( "\n" );
+          System.out.print("Testing getValue() - should give last value of above:      ");
+          System.out.println(d.getValue());
+      }   
+      catch( Exception e ) { System.out.println ( "nope" ); }
+
+      System.out.print( "Rolling dice w/ 7 sides 9 times should return 9 nums 1-7:  " );
+      try { 
+          Die d = new Die(7); 
+          for (int i = 0; i < 9; i++) { //roll is 9 times
+              if (0 < d.roll() && d.roll() <= 7) { //checking if the number is between 1 and 7
+                  System.out.print( d.roll()+" " );
+              }
+          } System.out.print( "\n" );
+          System.out.print("Testing getValue() - should give last value of above:      ");
+          System.out.println(d.getValue());
+      }   
+      catch( Exception e ) { System.out.println ( "nope" ); }
+
+      System.out.print( "Rolling dice w/ 5 sides 2 times should return 2 nums 1-5:  " );
+      try { 
+          Die d = new Die(5); 
+          for (int i = 0; i < 2; i++) { //roll is 2 times
+              if (0 < d.roll() && d.roll() <= 5) { //checking if the number is between 1 and 5
+                  System.out.print( d.roll()+" " );
+              }
+          } System.out.print( "\n" );
+          System.out.print("Testing getValue() - should give last value of above:      ");
+          System.out.println(d.getValue());
+      }   
+      catch( Exception e ) { System.out.println ( "nope" ); }   
+
+      
+      //testing setSides() method
+      System.out.println( "Tests for setSides(): " );
+      
+      System.out.print( "Setting the sides to 9 should give you 9: " );
+      try { Die d = new Die(5);  System.out.println( d.setSides(9) );}                                   
+      catch( Exception e ) { System.out.println ( "number can't be used" ); }
+
+      System.out.print( "Setting the sides to 7 should give you 7: " );
+      try { Die d = new Die(5);  System.out.println( d.setSides(7) );}                                   
+      catch( Exception e ) { System.out.println ( "number can't be used" ); }
+     
+      System.out.print( "Setting the sides to 4 should give you 4: " );
+      try { Die d = new Die(5);  System.out.println( d.setSides(4) );}                                   
+      catch( Exception e ) { System.out.println ( "number can't be used" ); }
+     
+      System.out.print( "Setting the sides to 2 shouldn't work:    ");
+      try { Die d = new Die(5);  System.out.println( d.setSides(2) );}                                   
+      catch( Exception e ) { System.out.println ( "number can't be used" ); }
+     
+      System.out.print( "Setting the sides to 1 shouldn't work:    " );
+      try { Die d = new Die(5);  System.out.println( d.setSides(1) );}                                   
+      catch( Exception e ) { System.out.println ( "number can't be used" ); }
+      
+
+      //testing toString() method
+      System.out.println( "Tests for toString(): " );
+
+      System.out.print( "Should print 'right': " );
+      try { Die d = new Die(7); System.out.println( d.toString().equals("[" + d.getValue() + "]") ? "right" : "wrong" ); }
+      catch( Exception e ) { System.out.println( false ); } 
+
+      System.out.print( "Should print 'right': " );
+      try { Die d = new Die(4); System.out.println( d.toString().equals("[" + d.getValue() + "]") ? "right" : "wrong" ); }
+      catch( Exception e ) { System.out.println( false ); } 
+
+      System.out.print( "Should print 'right': " );
+      try { Die d = new Die(8); System.out.println( d.toString().equals("[" + d.getValue() + "]") ? "right" : "wrong" ); }
+      catch( Exception e ) { System.out.println( false ); } 
+
+      System.out.print( "Should print 'right': " );
+      try { Die d = new Die(10); System.out.println( d.toString().equals("[" + d.getValue() + "]") ? "right" : "wrong" ); }
+      catch( Exception e ) { System.out.println( false ); } 
+
+      System.out.print( "Should print 'right': " );
+      try { Die d = new Die(5); System.out.println( d.toString().equals("[" + d.getValue() + "]") ? "right" : "wrong" ); }
+      catch( Exception e ) { System.out.println( false ); }
+
+
+      //testing toString( Die d ) method
+      System.out.println( "Tests for toString(): " );
+
+      System.out.print( "Should print 'right': " );
+      try { Die d = new Die(7); System.out.println( Die.toString(d).equals("[" + d.getValue() + "]") ? "right" : "wrong" );}
+      catch( Exception e ) { System.out.println( false ); } 
+
+      System.out.print( "Should print 'right': " );
+      try { Die d = new Die(8); System.out.println( Die.toString(d).equals("[" + d.getValue() + "]") ? "right" : "wrong" ); }
+      catch( Exception e ) { System.out.println( false ); } 
+
+      System.out.print( "Should print 'right': " );
+      try { Die d = new Die(4); System.out.println( Die.toString(d).equals("[" + d.getValue() + "]") ? "right" : "wrong" ); }
+      catch( Exception e ) { System.out.println( false ); } 
+
+      System.out.print( "Should print 'right': " );
+      try { Die d = new Die(5); System.out.println( Die.toString(d).equals("[" + d.getValue() + "]") ? "right" : "wrong" ); }
+      catch( Exception e ) { System.out.println( false ); } 
+
+      System.out.print( "Should print 'right': " );
+      try { Die d = new Die(6); System.out.println( Die.toString(d).equals("[" + d.getValue() + "]") ? "right" : "wrong" ); }
+      catch( Exception e ) { System.out.println( false ); } 
+
    }
 
 }
