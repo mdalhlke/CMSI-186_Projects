@@ -29,20 +29,30 @@ public class HighRoll {
       BufferedReader input = new BufferedReader(new InputStreamReader(System.in));
       
       try {
-         System.out.println("How many dice do you want?: ");
-         System.out.print( ">>" );
-         int count = Integer.parseInt(input.readLine());
-         System.out.println("You have " + count + " dice.");
+         int count = 0;
+         int sides = 0;
+        
+         if(args.length == 2) {
+         	count = Integer.parseInt(args[0]);
+         	sides = Integer.parseInt(args[1]);
+         }
 
-         System.out.println("How many sides do you want the dice to have? (must be higher than 3): ");
-         System.out.print( ">>" );
-         int sides = Integer.parseInt(input.readLine());
-         System.out.println("The dice have " + sides + " sides.");
+         if(args.length == 0) {
+            System.out.println("How many dice do you want?: ");
+            System.out.print( ">>" );
+            count = Integer.parseInt(input.readLine());
+            System.out.println("You have " + count + " dice.");
 
+            System.out.println("How many sides do you want the dice to have? (must be higher than 3): ");
+            System.out.print( ">>" );
+            sides = Integer.parseInt(input.readLine());
+            System.out.println("The dice have " + sides + " sides.");
+         }
+ 
          DiceSet d = new DiceSet(count, sides); 
 
          int highscore = 0;
-        
+
          while(true) {
       	    System.out.println("Press '1' to roll the dice. ");
             System.out.println("Press '2' to roll a single dice.");
@@ -90,7 +100,6 @@ public class HighRoll {
                
                if('5' == inputLine.charAt(0)) {
             	  System.out.println("Your high score is: " + highscore);
-
                }
               
                if('q' == inputLine.charAt(0)) {
