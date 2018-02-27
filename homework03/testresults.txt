@@ -1,0 +1,625 @@
+Hello world from the Die class...
+Tests for the constructor: 
+Testing 1 should return 'number can't be used': number can't be used
+Testing 2 should return 'number can't be used': number can't be used
+Testing 3 should return 'number can't be used': number can't be used
+Testing 4 should return 'yeah': yeah
+Testing 7 should return 'yeah': yeah
+Tests for roll() and getValue(): 
+Rolling dice w/ 4 sides 5 times should return 5 nums 1-4:  3 2 2 4 2 
+Testing getValue() - should give last value of above:      2
+Rolling dice w/ 6 sides 3 times should return 3 nums 1-6:  6 4 1 
+Testing getValue() - should give last value of above:      1
+Rolling dice w/ 7 sides 9 times should return 9 nums 1-7:  6 1 5 6 6 7 6 2 4 
+Testing getValue() - should give last value of above:      4
+Rolling dice w/ 5 sides 2 times should return 2 nums 1-5:  3 4 
+Testing getValue() - should give last value of above:      4
+Tests for setSides(): 
+Setting the sides to 9 should give you 9: 9
+Setting the sides to 7 should give you 7: 7
+Setting the sides to 4 should give you 4: 4
+Setting the sides to 2 shouldn't work:    number can't be used
+Setting the sides to 1 shouldn't work:    number can't be used
+Tests for toString(): 
+Should print 'right': right
+Should print 'right': right
+Should print 'right': right
+Should print 'right': right
+Should print 'right': right
+Tests for toString(): 
+Should print 'right': right
+Should print 'right': right
+Should print 'right': right
+Should print 'right': right
+Should print 'right': right
+Testing sum() method:
+should get true:true
+should get true:true
+should get true:true
+should get true:true
+should get true:true
+Testing rollIndividual() method:
+should get true:true
+should get true:true
+should get true:true
+should get true:true
+should get true:true
+Testing getIndividual() method:
+should get true:true
+should get true:true
+should get true:true
+should get true:true
+should get true:true
+testing toString() method:
+should get true:[2][3][2][1][2][4]
+should get true:[6][1][3][2][6]
+should get true:[4][4][4][2][2][4][1][3][3]
+should get true:[3][4][4][4]
+should get true:[3][4][5][1][4][3][2][4]
+Testing toString( DiceSet ds ) method:
+should get true:[1][1][3][2][2][4]
+should get true:[1][1][4][4][6]
+should get true:[3][4][2][5][4][1][3][1][5]
+should get true:[5][2][4][2]
+should get true:[2][4][5][5][3][4][6][4]
+Testing isIdentical() method:
+should get true:true
+should get true:true
+should get true:true
+should get true:true
+should get true:true
+TESTING THE DIE CLASS: TEST CONSTRUCTOR FOR INVALID NUMBERS OF SIDES:
+   Too few sides requested to constructor....
+   Too few sides requested to constructor....
+   Too few sides requested to constructor....
+   Too few sides requested to constructor....
+TESTING THE DIE CLASS: TESTS ON 4-SIDED DIE:
+   roll() test for 4 sided die: 
+   You rolled a 3
+   You rolled a 1
+   You rolled a 2
+   You rolled a 4
+   You rolled a 3
+   Current value is: [3]
+TESTING THE DIE CLASS: TESTS ON 5-SIDED DIE:
+   roll() test for 5 sided die: 
+   You rolled a 1
+   You rolled a 2
+   You rolled a 2
+   You rolled a 3
+   You rolled a 3
+   Current value is: [3]
+TESTING THE DIE CLASS: TESTS ON 6-SIDED DIE:
+   roll() test for 6 sided die: 
+   You rolled a 3
+   You rolled a 4
+   You rolled a 4
+   You rolled a 2
+   You rolled a 4
+   Current value is: [4]
+TESTING THE DIE CLASS: TESTS ON 7-SIDED DIE:
+   roll() test for 7 sided die: 
+   You rolled a 6
+   You rolled a 4
+   You rolled a 6
+   You rolled a 1
+   You rolled a 7
+   Current value is: [7]
+TESTING THE DIE CLASS: TESTS ON 8-SIDED DIE:
+   roll() test for 8 sided die: 
+   You rolled a 7
+   You rolled a 3
+   You rolled a 8
+   You rolled a 1
+   You rolled a 2
+   Current value is: [2]
+TESTING THE DIE CLASS: TESTS ON 11-SIDED DIE USING NEW SIDE COUNT:
+   Rolling with new side count -- 
+      You rolled a 7
+      You rolled a 4
+      You rolled a 11
+      You rolled a 9
+      You rolled a 9
+TESTING THE DIE CLASS: TESTS ON 17-SIDED DIE USING NEW SIDE COUNT:
+   Rolling with new side count -- 
+      You rolled a 12
+      current value is: 12
+TESTING THE DIE CLASS: TESTS ON 111-SIDED DIE USING NEW SIDE COUNT:
+   Rolling with new side count -- 
+      You rolled a 56
+      current value is: 56
+......End of Die Class Testing.....
+
+
+TESTING THE DICESET CLASS: TEST CONSTRUCTOR FOR 3 SIX-SIDED DICE:
+  DiceSet: 3 dice, six sided - ds36:
+      initialized ds36 contents             : [2][1][3]
+      after collective roll ds36 contents   : [2][4][6]
+      after individual roll(2) ds36 contents: [2][4][6]
+      sum of dice values is: 12
+   Re-rolling all dice
+      after collective roll ds36 contents   : [1][2][3]
+      after individual roll(2) ds36 contents: [1][2][5]
+      sum of dice values is                 : 8
+   Test of getIndividual(): 
+      value of die at index 0: 1
+      value of die at index 1: 2
+      value of die at index 2: 5
+TESTING THE DICESET CLASS: TEST CONSTRUCTOR FOR 6 NINE-SIDED DICE:
+   DiceSet: 6 dice, nine sided - ds69:
+      initialized ds36 contents             : [8][2][6][2][1][3]
+      after collective roll ds69 contents   : [6][8][5][7][9][3]
+      after individual roll(2) ds69 contents: [6][8][4][7][9][3]
+      sum of dice values is                 : 37
+   Re-rolling all dice
+      after collective roll ds69 contents   : [2][1][6][4][1][5]
+      after individual roll(3) ds69 contents: [2][1][6][6][1][5]
+      sum of dice values is                 : 21
+   Test of getIndividual(): 
+      value of die at index 0: 2
+      value of die at index 1: 1
+      value of die at index 2: 6
+      value of die at index 3: 6
+      value of die at index 4: 1
+      value of die at index 5: 5
+TESTING THE DICESET CLASS: TEST CONSTRUCTOR FOR 9 SEVENTEEN-SIDED DICE:
+   DiceSet: 9 dice, 17 sided - ds917:
+      initialized ds36 contents              : [13][14][16][13][3][10][8][15][3]
+      after collective roll ds917 contents   : [8][1][13][7][14][14][5][4][6]
+      after individual roll(6) ds917 contents: [8][1][13][7][14][14][4][4][6]
+      sum of dice values is                  : 71
+   Re-rolling all dice
+      after collective roll ds917 contents   : [1][15][15][6][13][6][12][10][6]
+      after individual roll(8) ds69 contents : [1][15][15][6][13][6][12][10][15]
+      sum of dice values is                  : 93
+   Test of getIndividual(): 
+      value of die at index 0: 1
+      value of die at index 1: 15
+      value of die at index 2: 15
+      value of die at index 3: 6
+      value of die at index 4: 13
+      value of die at index 5: 6
+      value of die at index 6: 12
+      value of die at index 7: 10
+      value of die at index 8: 15
+TESTING THE DICESET CLASS: TEST 'isIdentical()' FOR 9 SEVENTEEN-SIDED DICE:
+   Test of isIndentical(): 
+      Test of ds917 against ds69   : false
+      Test of ds917 against itself : true
+TESTING THE DICESET CLASS: TEST 'isIdentical()' FOR NEW SET OF 9 SEVENTEEN-SIDED DICE:
+   DiceSet ds917 contents       : [12][6][1][9][9][9][17][15][3]
+      New DiceSet ds2_917 contents : [10][2][5][8][2][14][11][16][7]
+      Test of ds917 against ds2_917: true
+......End of DiceSet Class Testing.....
+
+
+Welcome to the HighRoll Game!
+How many dice do you want?: 
+>>You have 5 dice.
+How many sides do you want the dice to have? (must be higher than 3): 
+>>The dice have 6 sides.
+Press '1' to roll the dice. 
+Press '2' to roll a single dice.
+Press '3' to calculate the score for this set.
+Press '4' to save this score as a high score.
+Press '5' to display the high score.
+Press 'q' to quit the program.
+>>The dice have been rolled.
+You rolled:[4][6][2][4][5]
+Press '1' to roll the dice. 
+Press '2' to roll a single dice.
+Press '3' to calculate the score for this set.
+Press '4' to save this score as a high score.
+Press '5' to display the high score.
+Press 'q' to quit the program.
+>>The dice have been rolled.
+You rolled:[3][4][1][6][4]
+Press '1' to roll the dice. 
+Press '2' to roll a single dice.
+Press '3' to calculate the score for this set.
+Press '4' to save this score as a high score.
+Press '5' to display the high score.
+Press 'q' to quit the program.
+>>The dice have been rolled.
+You rolled:[3][2][6][6][3]
+Press '1' to roll the dice. 
+Press '2' to roll a single dice.
+Press '3' to calculate the score for this set.
+Press '4' to save this score as a high score.
+Press '5' to display the high score.
+Press 'q' to quit the program.
+>>Which dice do you want to roll?: 
+Dice 3 has been rolled.
+You rolled a: 4
+Now you have:[3][2][4][6][3]
+Press '1' to roll the dice. 
+Press '2' to roll a single dice.
+Press '3' to calculate the score for this set.
+Press '4' to save this score as a high score.
+Press '5' to display the high score.
+Press 'q' to quit the program.
+>>Which dice do you want to roll?: 
+Dice 5 has been rolled.
+You rolled a: 2
+Now you have:[3][2][4][6][2]
+Press '1' to roll the dice. 
+Press '2' to roll a single dice.
+Press '3' to calculate the score for this set.
+Press '4' to save this score as a high score.
+Press '5' to display the high score.
+Press 'q' to quit the program.
+>>Which dice do you want to roll?: 
+Dice 2 has been rolled.
+You rolled a: 3
+Now you have:[3][3][4][6][2]
+Press '1' to roll the dice. 
+Press '2' to roll a single dice.
+Press '3' to calculate the score for this set.
+Press '4' to save this score as a high score.
+Press '5' to display the high score.
+Press 'q' to quit the program.
+>>Your score is: 18
+Press '1' to roll the dice. 
+Press '2' to roll a single dice.
+Press '3' to calculate the score for this set.
+Press '4' to save this score as a high score.
+Press '5' to display the high score.
+Press 'q' to quit the program.
+>>18 score has been saved as the high score.
+Press '1' to roll the dice. 
+Press '2' to roll a single dice.
+Press '3' to calculate the score for this set.
+Press '4' to save this score as a high score.
+Press '5' to display the high score.
+Press 'q' to quit the program.
+>>Your high score is: 18
+Press '1' to roll the dice. 
+Press '2' to roll a single dice.
+Press '3' to calculate the score for this set.
+Press '4' to save this score as a high score.
+Press '5' to display the high score.
+Press 'q' to quit the program.
+>>The dice have been rolled.
+You rolled:[2][1][4][1][6]
+Press '1' to roll the dice. 
+Press '2' to roll a single dice.
+Press '3' to calculate the score for this set.
+Press '4' to save this score as a high score.
+Press '5' to display the high score.
+Press 'q' to quit the program.
+>>The dice have been rolled.
+You rolled:[4][5][5][3][6]
+Press '1' to roll the dice. 
+Press '2' to roll a single dice.
+Press '3' to calculate the score for this set.
+Press '4' to save this score as a high score.
+Press '5' to display the high score.
+Press 'q' to quit the program.
+>>Which dice do you want to roll?: 
+Dice 5 has been rolled.
+You rolled a: 1
+Now you have:[4][5][5][3][1]
+Press '1' to roll the dice. 
+Press '2' to roll a single dice.
+Press '3' to calculate the score for this set.
+Press '4' to save this score as a high score.
+Press '5' to display the high score.
+Press 'q' to quit the program.
+>>Which dice do you want to roll?: 
+Dice 1 has been rolled.
+You rolled a: 4
+Now you have:[4][5][5][3][1]
+Press '1' to roll the dice. 
+Press '2' to roll a single dice.
+Press '3' to calculate the score for this set.
+Press '4' to save this score as a high score.
+Press '5' to display the high score.
+Press 'q' to quit the program.
+>>Your score is: 18
+Press '1' to roll the dice. 
+Press '2' to roll a single dice.
+Press '3' to calculate the score for this set.
+Press '4' to save this score as a high score.
+Press '5' to display the high score.
+Press 'q' to quit the program.
+>>18 score has been saved as the high score.
+Press '1' to roll the dice. 
+Press '2' to roll a single dice.
+Press '3' to calculate the score for this set.
+Press '4' to save this score as a high score.
+Press '5' to display the high score.
+Press 'q' to quit the program.
+>>Your high score is: 18
+Press '1' to roll the dice. 
+Press '2' to roll a single dice.
+Press '3' to calculate the score for this set.
+Press '4' to save this score as a high score.
+Press '5' to display the high score.
+Press 'q' to quit the program.
+>>Welcome to the HighRoll Game!
+How many dice do you want?: 
+>>You have 11 dice.
+How many sides do you want the dice to have? (must be higher than 3): 
+>>The dice have 17 sides.
+Press '1' to roll the dice. 
+Press '2' to roll a single dice.
+Press '3' to calculate the score for this set.
+Press '4' to save this score as a high score.
+Press '5' to display the high score.
+Press 'q' to quit the program.
+>>The dice have been rolled.
+You rolled:[6][14][4][1][5][6][5][1][2][8][14]
+Press '1' to roll the dice. 
+Press '2' to roll a single dice.
+Press '3' to calculate the score for this set.
+Press '4' to save this score as a high score.
+Press '5' to display the high score.
+Press 'q' to quit the program.
+>>The dice have been rolled.
+You rolled:[7][9][2][9][4][6][3][2][14][11][17]
+Press '1' to roll the dice. 
+Press '2' to roll a single dice.
+Press '3' to calculate the score for this set.
+Press '4' to save this score as a high score.
+Press '5' to display the high score.
+Press 'q' to quit the program.
+>>The dice have been rolled.
+You rolled:[16][17][12][8][15][10][7][8][6][12][15]
+Press '1' to roll the dice. 
+Press '2' to roll a single dice.
+Press '3' to calculate the score for this set.
+Press '4' to save this score as a high score.
+Press '5' to display the high score.
+Press 'q' to quit the program.
+>>Which dice do you want to roll?: 
+Dice 11 has been rolled.
+You rolled a: 5
+Now you have:[16][17][12][8][15][10][7][8][6][12][5]
+Press '1' to roll the dice. 
+Press '2' to roll a single dice.
+Press '3' to calculate the score for this set.
+Press '4' to save this score as a high score.
+Press '5' to display the high score.
+Press 'q' to quit the program.
+>>Which dice do you want to roll?: 
+Dice 1 has been rolled.
+You rolled a: 15
+Now you have:[15][17][12][8][15][10][7][8][6][12][5]
+Press '1' to roll the dice. 
+Press '2' to roll a single dice.
+Press '3' to calculate the score for this set.
+Press '4' to save this score as a high score.
+Press '5' to display the high score.
+Press 'q' to quit the program.
+>>Which dice do you want to roll?: 
+Dice 7 has been rolled.
+You rolled a: 16
+Now you have:[15][17][12][8][15][10][16][8][6][12][5]
+Press '1' to roll the dice. 
+Press '2' to roll a single dice.
+Press '3' to calculate the score for this set.
+Press '4' to save this score as a high score.
+Press '5' to display the high score.
+Press 'q' to quit the program.
+>>Your score is: 124
+Press '1' to roll the dice. 
+Press '2' to roll a single dice.
+Press '3' to calculate the score for this set.
+Press '4' to save this score as a high score.
+Press '5' to display the high score.
+Press 'q' to quit the program.
+>>124 score has been saved as the high score.
+Press '1' to roll the dice. 
+Press '2' to roll a single dice.
+Press '3' to calculate the score for this set.
+Press '4' to save this score as a high score.
+Press '5' to display the high score.
+Press 'q' to quit the program.
+>>Your high score is: 124
+Press '1' to roll the dice. 
+Press '2' to roll a single dice.
+Press '3' to calculate the score for this set.
+Press '4' to save this score as a high score.
+Press '5' to display the high score.
+Press 'q' to quit the program.
+>>The dice have been rolled.
+You rolled:[10][2][7][12][13][3][13][11][9][13][9]
+Press '1' to roll the dice. 
+Press '2' to roll a single dice.
+Press '3' to calculate the score for this set.
+Press '4' to save this score as a high score.
+Press '5' to display the high score.
+Press 'q' to quit the program.
+>>The dice have been rolled.
+You rolled:[7][5][3][11][6][6][11][16][11][2][11]
+Press '1' to roll the dice. 
+Press '2' to roll a single dice.
+Press '3' to calculate the score for this set.
+Press '4' to save this score as a high score.
+Press '5' to display the high score.
+Press 'q' to quit the program.
+>>Which dice do you want to roll?: 
+Dice 5 has been rolled.
+You rolled a: 17
+Now you have:[7][5][3][11][17][6][11][16][11][2][11]
+Press '1' to roll the dice. 
+Press '2' to roll a single dice.
+Press '3' to calculate the score for this set.
+Press '4' to save this score as a high score.
+Press '5' to display the high score.
+Press 'q' to quit the program.
+>>Which dice do you want to roll?: 
+Dice 3 has been rolled.
+You rolled a: 3
+Now you have:[7][5][3][11][17][6][11][16][11][2][11]
+Press '1' to roll the dice. 
+Press '2' to roll a single dice.
+Press '3' to calculate the score for this set.
+Press '4' to save this score as a high score.
+Press '5' to display the high score.
+Press 'q' to quit the program.
+>>Your score is: 100
+Press '1' to roll the dice. 
+Press '2' to roll a single dice.
+Press '3' to calculate the score for this set.
+Press '4' to save this score as a high score.
+Press '5' to display the high score.
+Press 'q' to quit the program.
+>>100 score has been saved as the high score.
+Press '1' to roll the dice. 
+Press '2' to roll a single dice.
+Press '3' to calculate the score for this set.
+Press '4' to save this score as a high score.
+Press '5' to display the high score.
+Press 'q' to quit the program.
+>>Your high score is: 100
+Press '1' to roll the dice. 
+Press '2' to roll a single dice.
+Press '3' to calculate the score for this set.
+Press '4' to save this score as a high score.
+Press '5' to display the high score.
+Press 'q' to quit the program.
+>>Welcome to the HighRoll Game!
+How many dice do you want?: 
+>>You have 29 dice.
+How many sides do you want the dice to have? (must be higher than 3): 
+>>The dice have 4 sides.
+Press '1' to roll the dice. 
+Press '2' to roll a single dice.
+Press '3' to calculate the score for this set.
+Press '4' to save this score as a high score.
+Press '5' to display the high score.
+Press 'q' to quit the program.
+>>The dice have been rolled.
+You rolled:[4][1][2][2][4][1][2][2][1][2][3][3][2][4][1][2][3][3][3][4][3][4][3][2][2][1][3][1][1]
+Press '1' to roll the dice. 
+Press '2' to roll a single dice.
+Press '3' to calculate the score for this set.
+Press '4' to save this score as a high score.
+Press '5' to display the high score.
+Press 'q' to quit the program.
+>>The dice have been rolled.
+You rolled:[3][4][2][1][1][2][1][3][3][1][3][2][2][4][3][1][4][4][1][3][1][3][2][3][4][2][4][3][2]
+Press '1' to roll the dice. 
+Press '2' to roll a single dice.
+Press '3' to calculate the score for this set.
+Press '4' to save this score as a high score.
+Press '5' to display the high score.
+Press 'q' to quit the program.
+>>The dice have been rolled.
+You rolled:[3][4][4][4][3][4][4][2][1][2][3][1][2][4][2][3][1][2][3][4][4][3][3][3][1][4][4][1][4]
+Press '1' to roll the dice. 
+Press '2' to roll a single dice.
+Press '3' to calculate the score for this set.
+Press '4' to save this score as a high score.
+Press '5' to display the high score.
+Press 'q' to quit the program.
+>>Which dice do you want to roll?: 
+Dice 29 has been rolled.
+You rolled a: 4
+Now you have:[3][4][4][4][3][4][4][2][1][2][3][1][2][4][2][3][1][2][3][4][4][3][3][3][1][4][4][1][4]
+Press '1' to roll the dice. 
+Press '2' to roll a single dice.
+Press '3' to calculate the score for this set.
+Press '4' to save this score as a high score.
+Press '5' to display the high score.
+Press 'q' to quit the program.
+>>Which dice do you want to roll?: 
+Dice 1 has been rolled.
+You rolled a: 1
+Now you have:[1][4][4][4][3][4][4][2][1][2][3][1][2][4][2][3][1][2][3][4][4][3][3][3][1][4][4][1][4]
+Press '1' to roll the dice. 
+Press '2' to roll a single dice.
+Press '3' to calculate the score for this set.
+Press '4' to save this score as a high score.
+Press '5' to display the high score.
+Press 'q' to quit the program.
+>>Which dice do you want to roll?: 
+Dice 17 has been rolled.
+You rolled a: 3
+Now you have:[1][4][4][4][3][4][4][2][1][2][3][1][2][4][2][3][3][2][3][4][4][3][3][3][1][4][4][1][4]
+Press '1' to roll the dice. 
+Press '2' to roll a single dice.
+Press '3' to calculate the score for this set.
+Press '4' to save this score as a high score.
+Press '5' to display the high score.
+Press 'q' to quit the program.
+>>Your score is: 83
+Press '1' to roll the dice. 
+Press '2' to roll a single dice.
+Press '3' to calculate the score for this set.
+Press '4' to save this score as a high score.
+Press '5' to display the high score.
+Press 'q' to quit the program.
+>>83 score has been saved as the high score.
+Press '1' to roll the dice. 
+Press '2' to roll a single dice.
+Press '3' to calculate the score for this set.
+Press '4' to save this score as a high score.
+Press '5' to display the high score.
+Press 'q' to quit the program.
+>>Your high score is: 83
+Press '1' to roll the dice. 
+Press '2' to roll a single dice.
+Press '3' to calculate the score for this set.
+Press '4' to save this score as a high score.
+Press '5' to display the high score.
+Press 'q' to quit the program.
+>>The dice have been rolled.
+You rolled:[4][1][1][3][2][1][2][2][1][4][2][1][4][2][1][4][4][2][1][1][2][4][2][2][1][2][2][1][3]
+Press '1' to roll the dice. 
+Press '2' to roll a single dice.
+Press '3' to calculate the score for this set.
+Press '4' to save this score as a high score.
+Press '5' to display the high score.
+Press 'q' to quit the program.
+>>The dice have been rolled.
+You rolled:[2][1][1][1][1][2][3][4][2][3][4][2][4][2][4][1][2][1][1][4][4][2][4][2][1][2][2][1][1]
+Press '1' to roll the dice. 
+Press '2' to roll a single dice.
+Press '3' to calculate the score for this set.
+Press '4' to save this score as a high score.
+Press '5' to display the high score.
+Press 'q' to quit the program.
+>>Which dice do you want to roll?: 
+Dice 19 has been rolled.
+You rolled a: 4
+Now you have:[2][1][1][1][1][2][3][4][2][3][4][2][4][2][4][1][2][1][4][4][4][2][4][2][1][2][2][1][1]
+Press '1' to roll the dice. 
+Press '2' to roll a single dice.
+Press '3' to calculate the score for this set.
+Press '4' to save this score as a high score.
+Press '5' to display the high score.
+Press 'q' to quit the program.
+>>Which dice do you want to roll?: 
+Dice 23 has been rolled.
+You rolled a: 4
+Now you have:[2][1][1][1][1][2][3][4][2][3][4][2][4][2][4][1][2][1][4][4][4][2][4][2][1][2][2][1][1]
+Press '1' to roll the dice. 
+Press '2' to roll a single dice.
+Press '3' to calculate the score for this set.
+Press '4' to save this score as a high score.
+Press '5' to display the high score.
+Press 'q' to quit the program.
+>>Your score is: 67
+Press '1' to roll the dice. 
+Press '2' to roll a single dice.
+Press '3' to calculate the score for this set.
+Press '4' to save this score as a high score.
+Press '5' to display the high score.
+Press 'q' to quit the program.
+>>67 score has been saved as the high score.
+Press '1' to roll the dice. 
+Press '2' to roll a single dice.
+Press '3' to calculate the score for this set.
+Press '4' to save this score as a high score.
+Press '5' to display the high score.
+Press 'q' to quit the program.
+>>Your high score is: 67
+Press '1' to roll the dice. 
+Press '2' to roll a single dice.
+Press '3' to calculate the score for this set.
+Press '4' to save this score as a high score.
+Press '5' to display the high score.
+Press 'q' to quit the program.
+>>
