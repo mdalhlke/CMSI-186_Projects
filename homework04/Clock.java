@@ -28,12 +28,15 @@ public class Clock {
    private static final double MAXIMUM_DEGREE_VALUE = 360.0;
    private static final double HOUR_HAND_DEGREES_PER_SECOND = 0.00834;
    private static final double MINUTE_HAND_DEGREES_PER_SECOND = 0.1;
+   private static final double EPSILON = 0.00001;
+   private double tick;
+   private double timeSlice;
 
   /**
    *  Constructor goes here
    */
    public Clock() {
-
+      this.tick = tick;
    }
 
   /**
@@ -53,7 +56,13 @@ public class Clock {
    *  @throws  NumberFormatException
    */
    public double validateAngleArg( String argValue ) throws NumberFormatException {
-      return 0.0;
+      //must correctly handle non-negative reals that are less than 360.0 degrees
+      double value = Double.parseDouble(argValue);
+      if(value < 360.0 && value >= 0.0) {
+         return value;
+      } else {
+         throw new NumberFormatException("invalid input");
+      }
    }
 
   /**
