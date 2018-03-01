@@ -47,8 +47,8 @@ public class Clock {
    *  @return double-precision value of the current clock tick
    */
    public double tick() {
-     this.tick = this.timeSlice; 
-     return this.tick;
+      this.tick = this.timeSlice;
+      return this.tick;
    }
 
   /**
@@ -62,7 +62,7 @@ public class Clock {
       double value = 0.0;
       try {
          value = Double.parseDouble(argValue);
-         if(value < 360.0 && value >= 0.0) {
+         if(value < MAXIMUM_DEGREE_VALUE && value >= 0.0) {
             return value;
          }
        }
@@ -89,10 +89,10 @@ public class Clock {
       if(value < 1800.0 && value > 0.0) {
          return value;
       } else if(value == (Double) null) {
-           value = 60.0;
+           value = DEFAULT_TIME_SLICE_IN_SECONDS;
            return value;
       } else {
-        return -1;
+        return INVALID_ARGUMENT_VALUE;
       }
    }
 
@@ -101,6 +101,7 @@ public class Clock {
    *  @return double-precision value of the hour hand location
    */
    public double getHourHandAngle() {
+
       return 0.0;
    }
 
