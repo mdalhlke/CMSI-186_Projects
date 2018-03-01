@@ -37,6 +37,7 @@ public class Clock {
    */
    public Clock() {
       this.tick = tick;
+      this.timeSlice = timeSlice;
    }
 
   /**
@@ -46,7 +47,8 @@ public class Clock {
    *  @return double-precision value of the current clock tick
    */
    public double tick() {
-      return 0.0;
+     this.tick = this.timeSlice; 
+     return this.tick;
    }
 
   /**
