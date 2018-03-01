@@ -57,12 +57,16 @@ public class Clock {
    */
    public double validateAngleArg( String argValue ) throws NumberFormatException {
       //must correctly handle non-negative reals that are less than 360.0 degrees
-      double value = Double.parseDouble(argValue);
-      if(value < 360.0 && value >= 0.0) {
-         return value;
-      } else {
-         throw new NumberFormatException("invalid input");
-      }
+      double value = 0.0;
+      try {
+         value = Double.parseDouble(argValue);
+         if(value < 360.0 && value >= 0.0) {
+            return value;
+         }
+       }
+       catch(NumberFormatException nfe) {
+          throw new NumberFormatException("invalid number");
+       }
    }
 
   /**
