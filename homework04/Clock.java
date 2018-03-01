@@ -77,7 +77,17 @@ public class Clock {
    *         to take a VERY LONG TIME to complete!
    */
    public double validateTimeSliceArg( String argValue ) {
-      return 0.0;
+      //must correctly handle positive reals that are less than 1800.0 seconds. 
+      //If absent, your program should use a default time slice of 60.0 seconds.
+      double value = Double.parseDouble(argValue);
+      if(value < 1800.0 && value > 0.0) {
+         return value;
+      } else if(value == (Double) null) {
+           value = 60.0;
+           return value;
+      } else {
+        return -1;
+      }
    }
 
   /**
