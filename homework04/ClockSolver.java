@@ -17,7 +17,6 @@
  *           -----  ----------  ------------  -----------------------------------------------------------
  *  @version 1.0.0  2017-02-28  B.J. Johnson  Initial writing and release
  * ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ */
-
 public class ClockSolver {
   /**
    *  Class field definintions go here
@@ -51,7 +50,7 @@ public class ClockSolver {
                              "   Please try again..........." );
          System.exit( 1 );
       }
-      Clock clock = new Clock();
+      //Clock clock = new Clock();
    }
 
   /**
@@ -64,12 +63,25 @@ public class ClockSolver {
    */
    public static void main( String args[] ) {
       ClockSolver cse = new ClockSolver();
-      Clock clock    = new Clock();
       double[] timeValues = new double[3];
-      cse.handleInitialArguments( args );
-      while( true ) {
-         break;
+      cse.handleInitialArguments(args);
+      Clock clock  = new Clock();
+      clock.validateAngleArg(args[0]);
+      if(args.length == 2) {
+         clock.validateTimeSliceArg(args[1]);
       }
-      System.exit( 0 );
+      while(clock.getTotalSeconds() <= 43200) {
+         if(clock.getHandAngle() == Double.parseDouble(args[0])) {
+             System.out.println(clock.toString());
+
+         }
+         //System.out.print(clock.toString() + "    ");
+         //System.out.println(clock.getHandAngle());
+
+
+         clock.tick();
+
+      }
+      System.exit(0);
    }
 }
