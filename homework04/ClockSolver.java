@@ -75,12 +75,7 @@ public class ClockSolver {
              System.out.println(clock.toString());
 
          }
-         //System.out.print(clock.toString() + "    ");
-         //System.out.println(clock.getHandAngle());
-
-
          clock.tick();
-
       }
       System.exit(0);
    }
