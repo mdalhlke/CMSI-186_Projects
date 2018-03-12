@@ -16,8 +16,9 @@
  *  ---------------
  *            Rev      Date     Modified by:  Reason for change/modification
  *           -----  ----------  ------------  -----------------------------------------------------------
- *  @version 1.0.0  2017-02-28  B.J. Johnson  Initial writing and release
+ *  @version 1.0.0  2017-02-28  B.\J. Johnson  Initial writing and release
  * ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ */
+import java.text.DecimalFormat;
 
 public class Clock {
   /**
@@ -28,18 +29,21 @@ public class Clock {
    private static final double MAXIMUM_DEGREE_VALUE = 360.0;
    private static final double HOUR_HAND_DEGREES_PER_SECOND = 0.00834;
    private static final double MINUTE_HAND_DEGREES_PER_SECOND = 0.1;
-   private static final double EPSILON = 0.00001;
-   private double tick;
+   private static final double EPSILON = 0.1; //0.00001;
+   private double angle;
    private double timeSlice;
+   //private double hour;
+   //private double min;
+   private double currentTime; //in seconds
 
   /**
    *  Constructor goes here
    */
    public Clock() {
-      this.tick = tick;
-      this.timeSlice = timeSlice;
+      this.currentTime = 0.0;
+      this.timeSlice = DEFAULT_TIME_SLICE_IN_SECONDS;
    }
-
+  
   /**
    *  Methods go here
    *
@@ -47,8 +51,8 @@ public class Clock {
    *  @return double-precision value of the current clock tick
    */
    public double tick() {
-      this.tick = this.timeSlice;
-      return this.tick;
+      this.currentTime += this.timeSlice;
+      return this.currentTime;
    }
 
   /**
@@ -59,11 +63,15 @@ public class Clock {
    */
    public double validateAngleArg( String argValue ) throws NumberFormatException {
       //must correctly handle non-negative reals that are less than 360.0 degrees
+   
       double value = 0.0;
       try {
          value = Double.parseDouble(argValue);
          if(value < MAXIMUM_DEGREE_VALUE && value >= 0.0) {
+            this.angle = value;
             return value;
+         } else {
+           return INVALID_ARGUMENT_VALUE;
          }
        }
        catch(NumberFormatException nfe) {
@@ -87,6 +95,7 @@ public class Clock {
       //If absent, your program should use a default time slice of 60.0 seconds.
       double value = Double.parseDouble(argValue);
       if(value < 1800.0 && value > 0.0) {
+         this.timeSlice = value;
          return value;
       } else if(value == (Double) null) {
            value = DEFAULT_TIME_SLICE_IN_SECONDS;
@@ -101,8 +110,8 @@ public class Clock {
    *  @return double-precision value of the hour hand location
    */
    public double getHourHandAngle() {
+      return ((this.currentTime * HOUR_HAND_DEGREES_PER_SECOND) % MAXIMUM_DEGREE_VALUE);
 
-      return 0.0;
    }
 
   /**
@@ -110,7 +119,7 @@ public class Clock {
    *  @return double-precision value of the minute hand location
    */
    public double getMinuteHandAngle() {
-      return 0.0;
+      return ((this.currentTime * MINUTE_HAND_DEGREES_PER_SECOND) % MAXIMUM_DEGREE_VALUE);
    }
 
   /**
@@ -118,7 +127,12 @@ public class Clock {
    *  @return double-precision value of the angle between the two hands
    */
    public double getHandAngle() {
-      return 0.0;
+      double hourAng = this.getHourHandAngle();
+      double minAng = this.getMinuteHandAngle();
+      DecimalFormat df = new DecimalFormat("000.000"); 
+      String df1 = df.format(Math.abs(hourAng - minAng));
+      double dble = Double.parseDouble(df1);
+      return Math.round(dble) % MAXIMUM_DEGREE_VALUE;
    }
 
   /**
@@ -127,7 +141,7 @@ public class Clock {
    *  @return double-precision value the total seconds private variable
    */
    public double getTotalSeconds() {
-      return 0.0;
+      return this.currentTime;
    }
 
   /**
@@ -135,9 +149,18 @@ public class Clock {
    *  @return String value of the current clock
    */
    public String toString() {
-      return "Clock string, dangit!";
+      int hour = (int) Math.floor(this.currentTime / 3600);
+      double secLeft = this.currentTime % 3600;
+      int min = (int) Math.floor(secLeft / 60);  
+      double sec =  secLeft % 60; 
+      DecimalFormat df = new DecimalFormat("00.000");
+      StringBuffer time = new StringBuffer();
+      time.append(hour).append (":").append(min).append(":").append(df.format(sec));
+      return time.toString();
    }
 
+
+  
   /**
    *  The main program starts here
    *  remember the constraints from the project description
