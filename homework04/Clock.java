@@ -30,10 +30,9 @@ public class Clock {
    private static final double HOUR_HAND_DEGREES_PER_SECOND = 0.00834;
    private static final double MINUTE_HAND_DEGREES_PER_SECOND = 0.1;
    private static final double EPSILON = 0.1; //0.00001;
+   private static final String ABSENT = new String("");
    private double angle;
    private double timeSlice;
-   //private double hour;
-   //private double min;
    private double currentTime; //in seconds
 
   /**
@@ -63,7 +62,6 @@ public class Clock {
    */
    public double validateAngleArg( String argValue ) throws NumberFormatException {
       //must correctly handle non-negative reals that are less than 360.0 degrees
-   
       double value = 0.0;
       try {
          value = Double.parseDouble(argValue);
@@ -71,7 +69,7 @@ public class Clock {
             this.angle = value;
             return value;
          } else {
-           return INVALID_ARGUMENT_VALUE;
+              return INVALID_ARGUMENT_VALUE;
          }
        }
        catch(NumberFormatException nfe) {
@@ -93,16 +91,17 @@ public class Clock {
    public double validateTimeSliceArg( String argValue ) {
       //must correctly handle positive reals that are less than 1800.0 seconds. 
       //If absent, your program should use a default time slice of 60.0 seconds.
-      double value = Double.parseDouble(argValue);
-      if(value < 1800.0 && value > 0.0) {
-         this.timeSlice = value;
-         return value;
-      } else if(value == (Double) null) {
-           value = DEFAULT_TIME_SLICE_IN_SECONDS;
-           return value;
-      } else {
-        return INVALID_ARGUMENT_VALUE;
-      }
+     if(argValue == ABSENT) {
+        this.timeSlice = DEFAULT_TIME_SLICE_IN_SECONDS;
+        return this.timeSlice;
+     }
+     double value = Double.parseDouble(argValue);
+     if(value < 1800.0 && value > 0.0) {
+        this.timeSlice = value;
+        return value;
+     } else {
+          return INVALID_ARGUMENT_VALUE;
+     }
    }
 
   /**
@@ -175,9 +174,47 @@ public class Clock {
       System.out.println( "  Creating a new clock: " );
       Clock clock = new Clock();
       System.out.println( "    New clock created: " + clock.toString() );
+      //testing validateAngleArg
       System.out.println( "    Testing validateAngleArg()....");
-      System.out.print( "      sending '  0 degrees', expecting double value   0.0" );
-      try { System.out.println( (0.0 == clock.validateAngleArg( "0.0" )) ? " - got 0.0" : " - no joy" ); }
+      System.out.print( "      sending '  0 degrees',    expecting double value 0.0       " );
+      try { System.out.println((0.0 == clock.validateAngleArg( "0.0" )) ? " - got 0.0" : " - no joy" ); }
+      catch( Exception e ) { System.out.println ( " - Exception thrown: " + e.toString() ); }
+      System.out.print( "      sending '  360 degrees',  expecting INVALID_ARGUMENT_VALUE " );
+      try{ System.out.println((INVALID_ARGUMENT_VALUE == clock.validateAngleArg("360.0")) ? " - got -1.0" : " - no joy"); }
+      catch( Exception e ) { System.out.println ( " - Exception thrown: " + e.toString() ); }
+      System.out.print( "      sending '  879 degrees',  expecting INVALID_ARGUMENT_VALUE " );
+      try{ System.out.println((INVALID_ARGUMENT_VALUE == clock.validateAngleArg("879.0")) ? " - got -1.0" : " - no joy"); }
+      catch( Exception e ) { System.out.println ( " - Exception thrown: " + e.toString() ); }
+      System.out.print( "      sending '  -2.0 degrees', expecting INVALID_ARGUMENT_VALUE " );
+      try{ System.out.println((INVALID_ARGUMENT_VALUE == clock.validateAngleArg("-2.0")) ? " - got -1.0" : " - no joy"); }
+      catch( Exception e ) { System.out.println ( " - Exception thrown: " + e.toString() ); }
+      System.out.print( "      sending '  180 degrees',  expecting double value 180.0     " );
+      try{ System.out.println((180.0 == clock.validateAngleArg("180.0")) ? " - got 180.0" : " - no joy"); }
+      catch( Exception e ) { System.out.println ( " - Exception thrown: " + e.toString() ); }
+      //testing validateTimeSliceArg
+      System.out.println( "    Testing validateTimeSliceArg....");
+      System.out.print( "      sending '  -2.0 seconds',   expecting INVALID_ARGUMENT_VALUE" );
+      try{ System.out.println((INVALID_ARGUMENT_VALUE == clock.validateTimeSliceArg("-2.0")) ? " - got -1.0" : " - no joy"); }
+      catch( Exception e ) { System.out.println ( " - Exception thrown: " + e.toString() ); }
+      System.out.print( "      sending '  1800.0 seconds', expecting INVALID_ARGUMENT_VALUE" );
+      try{ System.out.println((INVALID_ARGUMENT_VALUE == clock.validateTimeSliceArg("1800.0")) ? " - got -1.0" : " - no joy"); }
+      catch( Exception e ) { System.out.println ( " - Exception thrown: " + e.toString() ); }
+      System.out.print( "      sending '  1900.0 seconds', expecting INVALID_ARGUMENT_VALUE" );
+      try{ System.out.println((INVALID_ARGUMENT_VALUE == clock.validateTimeSliceArg("1900.0")) ? " - got -1.0" : " - no joy"); }
+      catch( Exception e ) { System.out.println ( " - Exception thrown: " + e.toString() ); }
+      System.out.print( "      sending '  nothing ',       expecting 60.0                  " );
+      try{ System.out.println((DEFAULT_TIME_SLICE_IN_SECONDS == clock.validateTimeSliceArg(ABSENT)) ? " - got 60.0" : " - no joy"); }
+      catch( Exception e ) { System.out.println ( " - Exception thrown: " + e.toString() ); }
+      System.out.print( "      sending '  .01 seconds',    expecting .01                   " );
+      try{ System.out.println((0.01 == clock.validateTimeSliceArg(".01")) ? " - got .01" : " - no joy"); }
+      catch( Exception e ) { System.out.println ( " - Exception thrown: " + e.toString() ); }
+      //testing getHourHandAngle
+      System.out.println( "    Testing getHourHandAngle....");
+      System.out.print( "      sending '  .01 seconds',    expecting .01                   " );
+      try{ System.out.println((0.01 == clock.validateTimeSliceArg(".01")) ? " - got .01" : " - no joy"); }
+      catch( Exception e ) { System.out.println ( " - Exception thrown: " + e.toString() ); }
+      System.out.print( "      sending '  .01 seconds',    expecting .01                   " );
+      try{ System.out.println((0.01 == clock.validateTimeSliceArg(".01")) ? " - got .01" : " - no joy"); }
       catch( Exception e ) { System.out.println ( " - Exception thrown: " + e.toString() ); }
    }
 }
