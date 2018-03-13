@@ -66,7 +66,7 @@ public class Clock {
       try {
          value = Double.parseDouble(argValue);
          if(value < MAXIMUM_DEGREE_VALUE && value >= 0.0) {
-            this.angle = value;
+            this.angle = value % 360.0;
             return value;
          } else {
               return INVALID_ARGUMENT_VALUE;
