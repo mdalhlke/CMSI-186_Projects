@@ -13,43 +13,40 @@
 
 
 public class Ball {
-   
-   //constructor 
-   public Ball() {
+    
+   private int posX;
+   private int posY;
+   private int velX;
+   private int velY;
+   private double timeslice;
 
+   //constructor 
+   public Ball(int posX, int posY, int velX, int velY, double timeslice) {
+      this.posX = posX;
+      this.posY = posY;
+      this.velX = velX;
+      this.velY = velY;
+      this.timeslice = timeslice;
    }
 
    //methods
-   public double validateTimeSlice() {
-      // check if args.length % 1 is true
-   	  // if it is than you are good to go
-   	  // if false, then default the timeslice to 1 sec
 
-      try {
-         if(args.length % 1){
-
-         }
-      catch (NumberFormatException nfe) {
-          throw new NumberFormatException("invalid number");
-      }
+   public double locationBall() {
+      //detemines balls location
    }
 
-   public double validateArgs(String argValue) throws NumberFormatException {
-      //1 ball has 4 args x and y position and x and y speeds
+   public double moveBall() {
+   	//move to another location using velocity
    }
 
-   public void friction() {
-      //slows each ball until the ball comes to rest - friction is a force that continuously decreases ball's speed at 1%/sec until
+   public double friction() {
+       //slows each ball until the ball comes to rest - friction is a force that continuously decreases ball's speed at 1%/sec until
    	  // the ball is traveling less than one inch per sec, at which point it comes to rest.
    }
 
-   public double velocity() {
-      //returns the velocity of each ball
-   }
+  public String toString() {
 
-   public double position() {
-   	  //returns the position of each ball
-   }
+  }
 
 
 }
