@@ -6,11 +6,11 @@
  *  Description   :  This class provides a bunch of methods which may be useful for the SoccerSim class
  *                   for Homework 5. 
  *
- *  Notes         :  None right now.  I'll add some as they occur.
+ *  Notes         :  None 
  *  Warnings      :  None
  *  Exceptions    :  IllegalArgumentException when the input arguments are "hinky"
  * ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/
-//import java.text.DecimalFormat;
+import java.text.DecimalFormat;
 
 public class Timer {
    
@@ -24,21 +24,10 @@ public class Timer {
    //constructor
    public Timer(double timeSlice) {
       this.currentTime = 0.0;
-      this.timeSlice = timeSlice;      
-   }
-
-   //validates the timeslice
-   public double validateTimeSlice(String argValue) {
-      try {
-         if(argValue == ABSENT) {
-            this.timeSlice = DEFAULT_TIME_SLICE_IN_SECONDS;
-            return this.timeSlice;
-         } else {
-         	return this.timeSlice;
-         }
-      }
-      catch (NumberFormatException nfe) {
-         throw new NumberFormatException("invalid number");
+      if(timeSlice <= 0.0){
+      	this.timeSlice = DEFAULT_TIME_SLICE_IN_SECONDS;
+      } else {
+           this.timeSlice = timeSlice;     
       } 
    }
    
@@ -54,7 +43,14 @@ public class Timer {
    }
 
    public String toString() {
-      return("The time is: " + this.currentTime);
+      int hour = (int) Math.floor(this.currentTime / 3600);
+      double secLeft = this.currentTime % 3600.0;
+      int min = (int) Math.floor(secLeft / 60);  
+      double sec =  secLeft % 60.0;
+      DecimalFormat df = new DecimalFormat("00.000");
+      StringBuffer time = new StringBuffer();
+      time.append(hour).append (":").append(min).append(":").append(df.format(sec));
+      return("The time is: " + time.toString());
    }
 
    //testing
