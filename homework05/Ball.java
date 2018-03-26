@@ -6,10 +6,11 @@
  *  Description   :  This class provides a bunch of methods which may be useful for the SoccerSim class
  *                   for Homework 5. 
  *
- *  Notes         :  None right now.  I'll add some as they occur.
+ *  Notes         :  None 
  *  Warnings      :  None
  *  Exceptions    :  IllegalArgumentException when the input arguments are "hinky"
  * ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/
+import java.text.DecimalFormat;
 
 public class Ball {
     
@@ -18,62 +19,79 @@ public class Ball {
    private double vx;
    private double vy;
    private double timeslice;
-   private final double radius = 4.50; //in inches
-   //private final double weight = 1; //in pounds
+   private double radius = 4.45 / 12; //in feet
 
    //constructor 
-   public Ball(String rxi, String ryi, String vxi, String vyi, String timeslice) {
-      this.rx = Double.parseDouble(rxi);
-      this.ry = Double.parseDouble(ryi);
-      this.vx = Double.parseDouble(vxi);
-      this.vy = Double.parseDouble(vyi);
-      this.timeslice = Double.parseDouble(timeslice);
-   }
-
-   //gets the location in the x direction
-   public double getLocationX() {
-      return this.rx; 
-   }
-
-   //gets the location in the y direction
-   public double getLocationY() {
-      return this.ry;
+   public Ball(double rxi, double ryi, double vxi, double vyi, double timeslice) {
+      this.rx = rxi;
+      this.ry = ryi;
+      this.vx = vxi;
+      this.vy = vyi;
+      this.timeslice = timeslice;
    }
 
    //decreases the velocity due to the frictional force until the ball comes to rest
-   public void velocityDueToFriction() {
+   public String velocityDueToFriction() {
+      DecimalFormat df = new DecimalFormat("00.000");
       this.vx = this.vx * (Math.pow(0.99, this.timeslice));
    	  this.vy = this.vy * (Math.pow(0.99, this.timeslice));
    	  double vf = Math.sqrt(this.vx * this.vx + this.vy * this.vy); 
-   	  if (vf <= 1/12) {
-   	      this.vx = 0;
-   	      this.vy = 0;
+   	  if (vf <= (1.0 / 12.0)) {
+   	      this.vx = 0.0;
+   	      this.vy = 0.0;
    	  } 
+   	  return ("< " + this.vx + ", " + this.vx + " >");
    }
 
    //moves the ball to another location according to the velocity  
    public void move() {
-       this.velocityDueToFriction();
-       this.rx = this.vx * this.timeslice + this.rx;
-       this.ry = this.vy * this.timeslice + this.ry;
+      String vel = this.velocityDueToFriction();
+      this.rx = this.vx * this.timeslice + this.rx;
+      this.ry = this.vy * this.timeslice + this.ry;
+   }
 
+   public void stop() {
+      this.vx = 0.0;
+      this.vy = 0.0;
+   }
+
+   public double getX() {
+      return this.rx;
+   }
+
+   public double getY() {
+      return this.ry;
+   }
+
+   public boolean isMoving() {
+      return (this.vx != 0 || this.vy != 0);
+   }
+
+   public void setRadius(double radius) {
+      this.radius = radius;
+   }
+
+   public double getRadius() {
+      return this.radius;
+   }
 
    //converts the results into a string 
    public String toString() {
-      //locationBall();
-     StringBuffer buffer = new StringBuffer();
-     return buffer.append(this.rx).append("\n").append(this.ry).append("\n").append(this.vx).append("\n").append(this.vy).append("\n").toString();
+     DecimalFormat df = new DecimalFormat("0.000000");
+     return "position: <" + df.format(this.rx) + ", " + df.format(this.ry) + 
+         ">  velocity: <"  + df.format(this.vx) + ", " + df.format(this.vy) + ">";
    }
 
    //testing
    public static void main(String[] args) {
       System.out.println( "\nBALL CLASS TESTER PROGRAM\n" + "--------------------------\n" );
   
-      Ball ball = new Ball("0", "0", "1", "0", "1");
+      Ball ball = new Ball(0, 0, 1, 0, 1);
       ball.move();
-      System.out.println(ball.toString());
-      /*System.out.println("Testing locationBall() method:");
-      try { Ball ball = new Ball("3", "4", "5", "6", "0.01"); System.out.println(("3,4" == ball.locationBall()) ? " - got it" : " - no joy" ); }
-      catch( Exception e ) { System.out.println ( " - Exception thrown: " + e.toString() ); }*/
+      //System.out.println(ball.toString());
+      //System.out.println(ball.velocityDueToFriction());
+      System.out.println("Testing velocityDueToFriction() method:");
+      try { System.out.println(("< 0.99, 0.0 >" == ball.velocityDueToFriction()) ? " - got it" : " - no joy" ); }
+      catch( Exception e ) { System.out.println ( " - Exception thrown: " + e.toString() ); }
    }
 }
