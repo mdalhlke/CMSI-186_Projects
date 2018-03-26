@@ -56,13 +56,23 @@ public class Timer {
    //testing
    public static void main(String[] args) {
       System.out.println( "\nTIMER CLASS TESTER PROGRAM\n" + "--------------------------\n" );
-  
-      Timer time = new Timer(1.0);
 
-      System.out.println(time.toString());
-      /*System.out.println("Testing locationBall() method:");
-      try { Ball ball = new Ball("3", "4", "5", "6", "0.01"); System.out.println(("3,4" == ball.locationBall()) ? " - got it" : " - no joy" ); }
-      catch( Exception e ) { System.out.println ( " - Exception thrown: " + e.toString() ); }*/
+      System.out.println("Testing timeSlice() method:");
+      System.out.println("Testing 1.0:");
+      try { Timer time = new Timer(1.0); System.out.println((1.0 == time.timeSlice()) ? " - got it" : " - no joy" ); }
+      catch( Exception e ) { System.out.println ( " - Exception thrown: " + e.toString() ); }
+      System.out.println("Testing 10.0:");
+      try { Timer time = new Timer(10.0); System.out.println((10.0 == time.timeSlice()) ? " - got it" : " - no joy" ); }
+      catch( Exception e ) { System.out.println ( " - Exception thrown: " + e.toString() ); }
+      System.out.println("Testing 0.001:");
+      try { Timer time = new Timer(0.001); System.out.println((0.001 == time.timeSlice()) ? " - got it" : " - no joy" ); }
+      catch( Exception e ) { System.out.println ( " - Exception thrown: " + e.toString() ); }
+      System.out.println("Testing 0.0:");
+      try { Timer time = new Timer(0.0); System.out.println((1.0 == time.timeSlice()) ? " - got it" : " - no joy" ); }
+      catch( Exception e ) { System.out.println ( " - Exception thrown: " + e.toString() ); }
+      System.out.println("Testing -1.0:");
+      try { Timer time = new Timer(-1.0); System.out.println((1.0 == time.timeSlice()) ? " - got it" : " - no joy" ); }
+      catch( Exception e ) { System.out.println ( " - Exception thrown: " + e.toString() ); }
+      
    }
-
 }
