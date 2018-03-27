@@ -86,12 +86,33 @@ public class Ball {
    public static void main(String[] args) {
       System.out.println( "\nBALL CLASS TESTER PROGRAM\n" + "--------------------------\n" );
   
-      Ball ball = new Ball(0, 0, 1, 0, 1);
-      ball.move();
-      //System.out.println(ball.toString());
-      //System.out.println(ball.velocityDueToFriction());
-      System.out.println("Testing velocityDueToFriction() method:");
-      try { System.out.println(("< 0.99, 0.0 >" == ball.velocityDueToFriction()) ? " - got it" : " - no joy" ); }
+      System.out.println("Testing methods:");
+      System.out.println("Testing #1:");
+      try { 
+      	Ball ball = new Ball(1.0, 1.0, 1.0, 1.0, 1.0); 
+      	ball.move(); 
+      	System.out.println((1.99 == ball.getX()) ? " - got it" : " - no joy" ); 
+      	System.out.println((1.99 == ball.getY()) ? " - got it" : " - no joy" ); } 
+      catch( Exception e ) { System.out.println ( " - Exception thrown: " + e.toString() ); }
+      System.out.println("Testing #2:");
+      try { Ball ball = new Ball(10.0, 1.0, 1.0, 1.0, 1.0); 
+      	ball.move(); 
+      	System.out.println((10.99 == ball.getX()) ? " - got it" : " - no joy" );
+      	System.out.println((1.99 == ball.getY()) ? " - got it" : " - no joy" ); }
+      catch( Exception e ) { System.out.println ( " - Exception thrown: " + e.toString() ); }
+      System.out.println("Testing #3:");
+      try { 
+      	Ball ball = new Ball(0.20, 100.01, 1.0, 1.0, 1.0); 
+      	ball.move();
+      	System.out.println((1.19 == ball.getX()) ? " - got it" : " - no joy" );
+      	System.out.println((101.0 == ball.getY()) ? " - got it" : " - no joy" ); }
+      catch( Exception e ) { System.out.println ( " - Exception thrown: " + e.toString() ); }
+      System.out.println("Testing #4:");
+      try { 
+      	Ball ball = new Ball(-1.0, 0.0, 1.0, 1.0, 1.0); 
+      	ball.move(); 
+      	System.out.println((-0.010000000000000009 == ball.getX()) ? " - got it" : " - no joy" ); 
+      	System.out.println((0.99 == ball.getY()) ? " - got it" : " - no joy" );}
       catch( Exception e ) { System.out.println ( " - Exception thrown: " + e.toString() ); }
    }
 }
