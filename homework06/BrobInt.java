@@ -25,7 +25,7 @@ import java.util.Arrays;
 
 public class BrobInt {
 
-   public static final BrobInt ZERO     = new BrobInt(  "0" );      /// Constant for "zero"
+   /*public static final BrobInt ZERO     = new BrobInt(  "0" );      /// Constant for "zero"
    public static final BrobInt ONE      = new BrobInt(  "1" );      /// Constant for "one"
    public static final BrobInt TWO      = new BrobInt(  "2" );      /// Constant for "two"
    public static final BrobInt THREE    = new BrobInt(  "3" );      /// Constant for "three"
@@ -42,13 +42,18 @@ public class BrobInt {
    public static final BrobInt MAX_INT  = new BrobInt( new Integer( Integer.MAX_VALUE ).toString() );
    public static final BrobInt MIN_INT  = new BrobInt( new Integer( Integer.MIN_VALUE ).toString() );
    public static final BrobInt MAX_LONG = new BrobInt( new Long( Long.MAX_VALUE ).toString() );
-   public static final BrobInt MIN_LONG = new BrobInt( new Long( Long.MIN_VALUE ).toString() );
+   public static final BrobInt MIN_LONG = new BrobInt( new Long( Long.MIN_VALUE ).toString() );*/
 
   /// These are the internal fields
    private String internalValue = "";        // internal String representation of this BrobInt
-   private byte   sign          = 0;         // "0" is positive, "1" is negative
+   private int   sign          = 0;         // "0" is positive, "1" is negative
    private String reversed      = "";        // the backwards version of the internal String representation
-   private byte[] byteVersion   = null;      // byte array for storing the string values; uses the reversed string
+   private byte[] byteVersion   = null;      // byte array for storing the string values; uses the reversed string 
+   
+   //private byte[] b   = null;
+   private int[] digits = null;
+   int length = 0;
+
 
   /**
    *  Constructor takes a string and assigns it to the internal storage, checks for a sign character
@@ -56,8 +61,31 @@ public class BrobInt {
    *   for later use
    *  @param  value  String value to make into a BrobInt
    */
-   public BrobInt( String value ) {
-      super();
+   public BrobInt( String value ) { 
+      internalValue = value;
+      
+      //handles the sign character
+      if( value.charAt(0) == '-' ) {
+         sign = 1;
+         value = value.substring(1);
+      } else if( value.charAt(0) == '+' ) {
+         value = value.substring(1);
+      }
+
+      this.validateDigits(value);
+
+      //assigns string to the internal storage 
+      length = value.length();
+      digits = new int[length];
+
+      try {
+         for( int i = 0; i < length; i++ ) {
+            digits[i] = Character.getNumericValue(value.charAt(( length - 1 ) - i ));
+        }
+      } catch (NumberFormatException nfe) {
+         throw new NumberFormatException("invalid number");
+      }
+
    }
 
   /** ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -67,8 +95,14 @@ public class BrobInt {
    *  note that there is no return false, because of throwing the exception
    *  note also that this must check for the '+' and '-' sign digits
    *  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ */
-   public boolean validateDigits() {
-      throw new UnsupportedOperationException( "\n         Sorry, that operation is not yet implemented." );
+   public boolean validateDigits(String value) {
+        for( int i = 0; i < value.length(); i++ ) {
+           char c = value.charAt(i);
+           if( c < 48 || c > 57 ) {
+              throw new IllegalArgumentException("invalid");
+           }
+        }
+        return true;
    }
 
   /** ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -90,12 +124,12 @@ public class BrobInt {
    }
 
   /** ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-   *  Method to add the value of a BrobIntk passed as argument to this BrobInt using byte array
-   *  @param  gint         BrobInt to add to this
-   *  @return BrobInt that is the sum of the value of this BrobInt and the one passed in
+   *  Method to
+   *  @param 
+   *  @return 
    *  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ */
-   public BrobInt addByte( BrobInt gint ) {
-      throw new UnsupportedOperationException( "\n         Sorry, that operation is not yet implemented." );
+   public int sign() {
+      return sign;
    }
 
   /** ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -103,17 +137,22 @@ public class BrobInt {
    *  @param  gint         BrobInt to add to this
    *  @return BrobInt that is the sum of the value of this BrobInt and the one passed in
    *  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ */
-   public BrobInt addInt( BrobInt gint ) {
-      throw new UnsupportedOperationException( "\n         Sorry, that operation is not yet implemented." );
-   }
+   public BrobInt add( BrobInt b2 ) {
+      int[] digits2 = b2.toArray();
+      int carryOver = 0;
+      int length = Math.max(digits2.length, digits.length) + 1;
+      int[] result = new int(length);
+      int sign2 = b2.sign();
 
-  /** ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-   *  Method to subtract the value of a BrobIntk passed as argument to this BrobInt using bytes
-   *  @param  gint         BrobInt to subtract from this
-   *  @return BrobInt that is the difference of the value of this BrobInt and the one passed in
-   *  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ */
-   public BrobInt subtractByte( BrobInt gint ) {
-      throw new UnsupportedOperationException( "\n         Sorry, that operation is not yet implemented." );
+      if( sign == sign2 ) {
+
+      } else {
+         return this.subtract(b2);
+      }
+
+      
+
+      throw new UnsupportedOperationException( "\n         Sorry, that operation is not yet implemented." ); 
    }
 
   /** ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -121,7 +160,7 @@ public class BrobInt {
    *  @param  gint         BrobInt to subtract from this
    *  @return BrobInt that is the difference of the value of this BrobInt and the one passed in
    *  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ */
-   public BrobInt subtractInt( BrobInt gint ) {
+   public BrobInt subtract( BrobInt gint ) {
       throw new UnsupportedOperationException( "\n         Sorry, that operation is not yet implemented." );
    }
 
@@ -195,19 +234,22 @@ public class BrobInt {
    *  @return String  which is the String representation of this BrobInt
    *  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ */
    public String toString() {
-      String byteVersionOutput = "";
+      /*String byteVersionOutput = "";
       for( int i = 0; i < byteVersion.length; i++ ) {
          byteVersionOutput = byteVersionOutput.concat( Byte.toString( byteVersion[i] ) );
       }
       byteVersionOutput = new String( new StringBuffer( byteVersionOutput ).reverse() );
+      return internalValue;*/
       return internalValue;
+
    }
 
   /** ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
    *  Method to display an Array representation of this BrobInt as its bytes
    *  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ */
-   public void toArray( byte[] d ) {
-      System.out.println( Arrays.toString( d ) );
+   public int[] toArray( ) {
+      System.out.println( Arrays.toString( digits ) );
+      return digits;
    }
 
   /** ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -216,8 +258,11 @@ public class BrobInt {
    *  note:  we don't really care about these
    *  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ */
    public static void main( String[] args ) {
-      System.out.println( "\n  Hello, world, from the BrobInt program!!\n" );
-      System.out.println( "\n   You should run your tests from the BrobIntTester...\n" );
+      //System.out.println( "\n  Hello, world, from the BrobInt program!!\n" );
+      //System.out.println( "\n   You should run your tests from the BrobIntTester...\n" );
+      BrobInt b1 = new BrobInt(args[0]);
+      b1.toArray();
+      //System.out.println(b1.toString());
 
       System.exit( 0 );
    }
