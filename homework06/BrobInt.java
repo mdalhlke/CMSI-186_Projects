@@ -68,7 +68,7 @@ public class BrobInt {
       if( value.charAt(0) == '-' ) {
          sign = 1;
          value = value.substring(1);
-      } else if( value.charAt(0) == '+' ) {
+      } else if( value.charAt(0) == '+' || value.charAt(0) == ' ' ) {
          value = value.substring(1);
       }
 
@@ -132,6 +132,24 @@ public class BrobInt {
       return sign;
    }
 
+   /** ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+   *  Method to return the correct representation of BrobInt 
+   *  @param  gint         make the BrobInt 
+   *  @return BrobInt that joins the array, reverses the number and returns a BrobInt 
+   *  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ */
+   private BrobInt makeBrobInt(String[] b, int sign) {
+      StringBuffer buffer = new StringBuffer(String.join("", b)); //makes the result array into a string
+      if (b.length() == 0) {
+         
+      }
+      if (sign == 1){
+         buffer.append("-");
+      }
+      buffer = buffer.reverse();
+      BrobInt brob = new BrobInt(buffer.toString());
+      return brob;
+   }
+
   /** ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
    *  Method to add the value of a BrobIntk passed as argument to this BrobInt using int array
    *  @param  gint         BrobInt to add to this
@@ -140,19 +158,30 @@ public class BrobInt {
    public BrobInt add( BrobInt b2 ) {
       int[] digits2 = b2.toArray();
       int carryOver = 0;
-      int length = Math.max(digits2.length, digits.length) + 1;
-      int[] result = new int(length);
+      int sum = 0, d1 = 0, d2 = 0;
+      int len1 = digits.length; 
+      int len2 = digits2.length;
+      int length = Math.max(len2, len1) + 1;
+      String[] result = new String[length];
       int sign2 = b2.sign();
 
-      if( sign == sign2 ) {
-
+      if (sign == sign2) {
+         for (int i = 0; i < length; i++) {
+            d1 = i < len1 ? digits[i] : 0;
+            d2 = i < len2 ? digits2[i] : 0;
+            sum = d1 + d2 + carryOver;
+            if (sum > 9) {
+               carryOver = 1;
+               sum -= 10;
+            } else {
+                 carryOver = 0;
+            }
+            result[i] = Integer.toString(sum);
+         } 
+         return makeBrobInt(result, sign);
       } else {
-         return this.subtract(b2);
-      }
-
-      
-
-      throw new UnsupportedOperationException( "\n         Sorry, that operation is not yet implemented." ); 
+         return subtract(b2);
+      } 
    }
 
   /** ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -160,9 +189,58 @@ public class BrobInt {
    *  @param  gint         BrobInt to subtract from this
    *  @return BrobInt that is the difference of the value of this BrobInt and the one passed in
    *  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ */
-   public BrobInt subtract( BrobInt gint ) {
-      throw new UnsupportedOperationException( "\n         Sorry, that operation is not yet implemented." );
+  private int compare( BrobInt b2 ) {
+     //if signs are different -> positive number wins
+     //if signs are same -> longer array wins if sign is positive else loses
+     //if signs are same and length is same -> bigger top place value wins                        
+  }
+
+  /** ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+   *  Method to subtract the value of a BrobIntk passed as argument to this BrobInt using int array
+   *  @param  gint         BrobInt to subtract from this
+   *  @return BrobInt that is the difference of the value of this BrobInt and the one passed in
+   *  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ */
+  private int compareAbsValue( BrobInt b2 ) {
+     //longer array wins if sign is positive else loses
+     //if length is same -> bigger top place value wins                        
+  }
+
+  /** ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+   *  Method to subtract the value of a BrobIntk passed as argument to this BrobInt using int array
+   *  @param  gint         BrobInt to subtract from this
+   *  @return BrobInt that is the difference of the value of this BrobInt and the one passed in
+   *  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ */
+   public BrobInt subtract( BrobInt b2 ) {
+      int [] digits2 = b2.toArray();
+      int borrow = 0;
+      int diff = 0, d1 = 0, d2 = 0;
+      int len1 = digits.length; 
+      int len2 = digits2.length;
+      int length = Math.max(len2, len1);
+      String[] result = new String[length];
+      int sign2 = b2.sign();
+
+      this.compareAbsValue(b2);
+      if (sign == sign2) {
+        for (int i = 0; i < length; i++) {
+           d1 = i < len1 ? digits[i] : 0;
+           d2 = i < len2 ? digits2[i] : 0; 
+           diff = d1 - d2;
+           if ((d1 - borrow) - d2 < 0) {
+              diff = (10 + d1 - borrow) - d2;
+              borrow = 1;
+           } else {
+              diff = (d1 - borrow) - d2;
+              borrow = 0;    
+           }
+           result[i] = Integer.toString(diff);
+           return makeBrobInt(result, sign);
+        }
+      } else {
+         return add(b2);
+      } 
    }
+
 
   /** ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
    *  Method to multiply the value of a BrobIntk passed as argument to this BrobInt
@@ -261,8 +339,11 @@ public class BrobInt {
       //System.out.println( "\n  Hello, world, from the BrobInt program!!\n" );
       //System.out.println( "\n   You should run your tests from the BrobIntTester...\n" );
       BrobInt b1 = new BrobInt(args[0]);
+      BrobInt b2 = new BrobInt(args[1]);
+      BrobInt b3;
       b1.toArray();
-      //System.out.println(b1.toString());
+      b3 = b1.add(b2);
+      System.out.println(b3.toString());
 
       System.exit( 0 );
    }
