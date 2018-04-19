@@ -361,6 +361,7 @@ public class BrobInt {
 
       for (int i = 0; i < length1; i++) {                    //smaller number 12
          k = i;
+        carry = 0;
          for (int j = 0; j < length; j++) {                  //bigger number  123
             product[k] += (longer[j] * shorter[i]) + carry;
             if (product[k] > 9) {
@@ -372,10 +373,11 @@ public class BrobInt {
             } else {
                carry = 0;
             }
-          k++;
+            k++;
          }
+         product[k] = carry;
       }
-      if (carry >= 1) {
+      if (carry >= 0) {
         product[k] = carry;
       }
       String[] result = new String[k+1];
@@ -585,18 +587,4 @@ public class BrobInt {
       System.exit( 0 );
    }
 }
-
-
-
-
-/*
-
-double    half    total
-______    _____  _______
- 20        5       20
- 40        2       0
- 80        1       80
-
-
-*/
 
