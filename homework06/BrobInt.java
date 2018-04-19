@@ -62,15 +62,15 @@ public class BrobInt {
    *  @param  value  String value to make into a BrobInt
    */
    public BrobInt( String value ) { 
-       //handles the sign character
+      internalValue = value;
+
+      //handles the sign character
       if( value.charAt(0) == '-' ) {
          sign = 1;
          value = value.substring(1);
       } else if( value.charAt(0) == '+' || value.charAt(0) == ' ' ) {
          value = value.substring(1);
       }
-
-      internalValue = value;
     
       this.validateDigits(value);
 
@@ -109,13 +109,12 @@ public class BrobInt {
    *  Method to reverse the value of this BrobInt
    *  @return BrobInt that is the reverse of the value of this BrobInt
    *  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ */
-   public BrobInt reverser() {
-      String thisString = this.toString();
-      StringBuffer buffer = new StringBuffer(thisString);
+   /*public BrobInt reverser() {
+      StringBuffer buffer = new StringBuffer(internalValue);
       buffer = buffer.reverse();
       BrobInt brob = new BrobInt(buffer.toString());
       return brob; 
-   }
+   }*/
 
   /** ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
    *  Method to reverse the value of a BrobIntk passed as argument
@@ -123,12 +122,11 @@ public class BrobInt {
    *  @param  gint         BrobInt to reverse its value
    *  @return BrobInt that is the reverse of the value of the BrobInt passed as argument
    *  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ */
-   public static BrobInt reverser( BrobInt b2 ) {
-      String b2String = b2.toString();
-      StringBuffer buffer = new StringBuffer(b2String);
+   public static int [] reverser( int[] b2 ) {
+      StringBuffer buffer = new StringBuffer(b2.toString());
       buffer = buffer.reverse();
-      BrobInt brob = new BrobInt(buffer.toString());
-      return brob; 
+      int[] arr = new int[Integer.parseInt(buffer.toString())];
+      return arr; 
    }
 
   /** ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -154,7 +152,14 @@ public class BrobInt {
          buffer.append("-");
       }
       buffer = buffer.reverse();
-      BrobInt brob = new BrobInt(buffer.toString());
+      String buffStr = buffer.toString();
+      for (int i = 0, length = buffStr.length() - 1; i < length; i++) {
+         if (buffStr.charAt(i) != '0') {
+            buffStr = buffStr.substring(i);
+            break;
+         } 
+      }
+      BrobInt brob = new BrobInt(buffStr);
       return brob;
    }
 
@@ -171,6 +176,27 @@ public class BrobInt {
         return this;
       }
 
+   }
+
+   /** ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+   *  Method to return the correct representation of BrobInt 
+   *  @param  gint         make the BrobInt 
+   *  @return BrobInt that joins the array, reverses the number and returns a BrobInt 
+   *  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ */
+   public BrobInt makeBrobIntDivide(int[] b, int sign) {
+      if (b.length == 0) {
+        throw new IllegalArgumentException("illegal arg");  
+      }
+      String[] result = new String[b.length];
+      for (int i = 0; i < b.length; i++) {
+         result[i] = String.valueOf(b[i]);
+      }
+      StringBuffer buffer = new StringBuffer(String.join("", result)); //makes the result array into a string
+      if (sign == 1){
+         buffer.append("-");
+      }
+      BrobInt brob = new BrobInt(buffer.toString());
+      return brob;
    }
 
    /** ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -339,6 +365,9 @@ public class BrobInt {
             product[k] += (longer[j] * shorter[i]) + carry;
             if (product[k] > 9) {
                carry = product[k] / 10;
+               if (carry == 0) {
+                  carry = 1;
+               }
                product[k] = product[k] % 10;
             } else {
                carry = 0;
@@ -346,11 +375,11 @@ public class BrobInt {
           k++;
          }
       }
-      if (carry == 1) {
-        product[k] = 1;
+      if (carry >= 1) {
+        product[k] = carry;
       }
-      String[] result = new String[k];
-      for (int a = 0; a < k; a++) {
+      String[] result = new String[k+1];
+      for (int a = 0; a <= k; a++) {
          result[a] = String.valueOf(product[a]);
       }
       if (sign != sign2) {
@@ -366,53 +395,57 @@ public class BrobInt {
    *  @param  b2         BrobInt to divide this by
    *  @return BrobInt that is the dividend of this BrobInt divided by the one passed in
    *  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ */
-   public BrobInt divide( BrobInt b2 ) {
-      BrobInt quotient = BrobInt.ZERO;  
-      BrobInt d1 = b2, d2 = this, d3 = BrobInt.ZERO; //d1 is the divisor, d2 is the dividen, d3 is current dividend being handled 
-      System.out.println(d2);
-      System.out.println(d1);
+   public BrobInt divide( BrobInt dvs ) {
+      int[] quotient = new int[digits.length];   
+      int[] divisor = reverser(dvs.toArray());   //dvs (d1)
+      int[] dividend = reverser(digits);        //this (d2)
+      int[] d3 = new int[dvs.toArray().length];   
+      String[] result = null;
+      String d3String;
       int n;
-      int[] digits2 = b2.toArray(); 
-      int len2 = digits2.length;
-      String extraction;
-      String d3String = d3.toString();
-      System.out.println("****" + d3String);
-      int sign2 = b2.sign();
+      int q;
+      int idx = 0;
+      int resultSign = 0;
+      int[] temp;
 
-      d2 = d2.reverser();
-      d1 = d1.reverser();
-      if (d1 == BrobInt.ZERO) {
+      if (sign != dvs.sign()) {
+         resultSign = 1;
+      }
+
+      if (divisor.toString() == "0" ) {
          throw new IllegalArgumentException("Are you trying to break the code??");
-      } else if (d1 == d2) {
-         return BrobInt.ONE;
-      } else if (d1.compareTo(d2) > 0) {   //d1>d2
-         return BrobInt.ZERO;
+      } else if (this.compareAbsValue(dvs) == 0) {
+         result[0] = "1";
+      } else if (this.compareAbsValue(dvs) < 0) {   //d1>d2
+         result[0] = "0"; 
       } else {
-         n = d1.length;
-         System.out.println(n);
-         d3String = d2.toString().substring(n); //extract that many characters from the front of d2 and put into d3
-         d3.toString().replace("0", d3String);
-         System.out.println(d3);
-         if (d1.compareTo(d3) > 0) { //d1>d3
+         n = divisor.length;
+         d3 = Arrays.copyOfRange(dividend, 0, n); //extract that many characters from the front of d2 and put into d3
+         d3String = d3.toString();
+         if (dvs.compareAbsValue(makeBrobIntDivide(d3, 0)) < 0) { //d1>d3
             n += 1;
-            //re-extract characters from d2 into d3
-            while (n <= d2.toString().length()) {
-               while (d3.compareTo(d1) > 0) {  //d3>d1
-                  b2.subtract(this);
-                  quotient.add(BrobInt.ONE);
-                  if (n++ == d1.toString().length()) {
-                     break;
-                  }
+            d3 = Arrays.copyOfRange(dividend, 0, n); 
+            while (n <= dividend.toString().length()) {
+               q = 0;
+               while (dvs.compareAbsValue(makeBrobIntDivide(d3, 0)) > 0) {  //d3>d1
+                  makeBrobIntDivide(d3, 0).subtract(dvs);
+                  q++;
                }
-            d3.multiply(BrobInt.TEN);
-            quotient.multiply(BrobInt.TEN);
-            extraction = d2.toString().substring(n - 1, n);
-            d3.toString().concat(extraction);//add current value of d3 to extracted digit [e.g., get "7" from d2, concat to d3 to make "197"]
-            break;
+               quotient[idx] = q;
+               idx++;
+               d3[n] = 0;
+               quotient[idx++] = 0;
+               if (n++ == divisor.toString().length()) {
+                  break;
+               }   
+               temp = Arrays.copyOfRange(dividend, n - 1, n);//add current value of d3 to extracted digit [e.g., get "7" from d2, concat to d3 to make "197"]
+               d3[n] += temp[0];
+               break;
             }
          }
-      return quotient;
+         return makeBrobIntDivide(quotient, resultSign);
       }
+      return makeBrobInt(result, resultSign);
    }
 
 
@@ -545,7 +578,8 @@ public class BrobInt {
       b1.toArray();
       /*b3 = b1.add(b2);
       System.out.println(b3.toString());*/
-      b3 = b1.divide(b2);
+      b3 = b1.multiply(b2);
+    //b3 = b1.reverser(b2);
       System.out.println(b3.toString());
 
       System.exit( 0 );
