@@ -111,11 +111,13 @@ public class BrobInt {
    *  @param  gint         BrobInt to reverse its value
    *  @return BrobInt that is the reverse of the value of the BrobInt passed as argument
    *  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ */
-   public static int [] reverser( int[] b2, int[] b ) {
-      for (int i = 0; i < b2.length; i++) {
-         b[i] = b2[b2.length - i - 1];
+   public static int[] reverser( int[] b2 ) {
+      for (int i = 0; i < b2.length / 2; i++) {
+         int temp = b2[i];
+         b2[i] = b2[b2.length - i - 1];
+         b2[b2.length - i - 1] = temp;
       }
-      return b; 
+      return b2; 
    }
 
   /** ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -141,6 +143,8 @@ public class BrobInt {
          buffer.append("-");
       }
       buffer = buffer.reverse();
+
+      //getting rid of the zeros in the front
       String buffStr = buffer.toString();
       for (int i = 0, length = buffStr.length() - 1; i < length; i++) {
          if (buffStr.charAt(i) != '0') {
@@ -178,6 +182,7 @@ public class BrobInt {
       for (int i = 0; i < b.length; i++) {
          result[i] = String.valueOf(b[i]);
       }
+
       StringBuffer buffer = new StringBuffer(String.join("", result)); //makes the result array into a string
       if (sign == 1){
          buffer.append("-");
@@ -347,7 +352,7 @@ public class BrobInt {
 
       for (int i = 0; i < length1; i++) {                    //smaller number 12
          k = i;
-        carry = 0;
+         carry = 0;
          for (int j = 0; j < length; j++) {                  //bigger number  123
             product[k] += (longer[j] * shorter[i]) + carry;
             if (product[k] > 9) {
@@ -366,7 +371,7 @@ public class BrobInt {
       if (carry >= 0) {
         product[k] = carry;
       }
-      String[] result = new String[k+1];
+      String[] result = new String[k + 1];
       for (int a = 0; a <= k; a++) {
          result[a] = String.valueOf(product[a]);
       }
@@ -385,12 +390,11 @@ public class BrobInt {
    *  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ */
    public BrobInt divide( BrobInt dvs ) {
       int[] quotient = new int[digits.length];  
-      int[] divisor = new int [dvs.toArray().length] ;   //dvs (d1)
-      BrobInt.reverser(dvs.toArray(), divisor);
-      int[] dividend = new int [digits.length];  
-      BrobInt.reverser(digits, dividend);      //this (d2)
-      int[] d3 = new int[dividend.length];   
+      int[] divisor = BrobInt.reverser(dvs.toArray());   //arg passed in  (d1) 
+      int[] dividend = BrobInt.reverser(digits);         //this           (d2)
+      int[] d3 = new int[digits.length + 1];   
       String[] result = null;
+      int subVal;
       int n;
       int q;
       int idx = 0;
@@ -400,7 +404,7 @@ public class BrobInt {
       if (sign != dvs.sign()) {
          resultSign = 1;
       }
-
+      System.out.println("yo" + this.compareTo(dvs));
       if (divisor.toString() == "0" ) {
          throw new IllegalArgumentException("Are you trying to break the code??");
       } else if (this.compareTo(dvs) == 0) {
@@ -409,33 +413,97 @@ public class BrobInt {
          result = new String[] {"0"}; 
       } else {
          n = divisor.length;
+         System.out.println("n " +n);
          d3 = Arrays.copyOfRange(dividend, 0, n); //extract that many characters from the front of d2 and put into d3
-         if (dvs.compareAbsValue(makeBrobIntDivide(d3, 0)) < 0) { //d1>d3
+         System.out.println(d3.length);
+         if (dvs.compareTo(makeBrobIntDivide(d3, 0)) > 0) { //d1>d3
             n += 1;
             d3 = Arrays.copyOfRange(dividend, 0, n); 
+            System.out.println("d3 " + d3[0]);
+            System.out.println("d3 " + d3[1]);
           }
-            while (n <= dividend.toString().length()) {
-               q = 0;
-               while (dvs.compareAbsValue(makeBrobIntDivide(d3, 0)) < 0) {  //d3>d1
-                  makeBrobIntDivide(d3, 0).subtract(dvs);
-                  q++;
-               }
-               quotient[idx] = q;
-               idx++;
-               d3[n] = 0;
-               quotient[idx++] = 0;
-               if (n++ == divisor.toString().length()) {
+          while (n <= dividend.toString().length()) {
+             q = 0;
+             BrobInt d3brob = new BrobInt(d3.toString());
+             while (makeBrobIntDivide(d3, 0).compareTo(dvs) > 0) {  //d3>d1  
+                String pc = makeBrobIntDivide(d3, 0).subtract(dvs).toString();
+                System.out.println("y.     " + pc);
+                int placehold = Integer.valueOf(pc);
+                //System.out.println("y.     " + pc);
+                int i = 0;
+                d3 = new int[digits.length + 1];
+                d3[i] = placehold;
+                System.out.println("d.     " + d3[i]);
+                i++;
+                System.out.println("p" + placehold);
+                System.out.println("%%%" + d3[i]);
+                //d3 = new int[] {Integer.parseInt(placehold)};
+                q++;
+                if (placehold <= 0) {
                   break;
-               }   
-               temp = Arrays.copyOfRange(dividend, n - 1, n);//add current value of d3 to extracted digit [e.g., get "7" from d2, concat to d3 to make "197"]
-               d3[n] += temp[0];
-               break;
-            }
-         
+                }
+             }
+             quotient[idx] = q;
+             System.out.println(quotient[0]);
+             idx++;
+             System.out.println(d3.length);
+             d3[d3.length - 1] = 0; //same as multiplying by 10
+             quotient[idx++] = 0;
+             if (n++ == divisor.toString().length()) {
+                break;
+             }   
+             temp = Arrays.copyOfRange(dividend, n - 1, n);//add current value of d3 to extracted digit [e.g., get "7" from d2, concat to d3 to make "197"]
+             d3[d3.length - 1] += temp[0];
+             break;
+          } 
          return makeBrobIntDivide(quotient, resultSign);
       }
       return makeBrobInt(result, resultSign);
    }
+
+// for implementation, in this discussion/comment/steps:
+     //  0. divisor [passed in as ARGUMENT] is "d1"
+     //     dividend [ME] is "d2"
+     //     current dividend being handled is "d3"
+     //     quotient is "q" and string length count is "n"
+     //        for example, 56789 divided by 37: d1 == 37 and d2 == 56789
+     //                     d3 starts with 56 and goes on adding single digits with each iteration
+     //                     "q" starts at zero, and "n" starts at 2
+
+     //  1. is d1 == 0?  if so, throw IllegalArgumentException
+     //  IF ARGUMENT is equal to BrobInt.ZERO
+     //     throw new IllegalArgumentException
+
+     //  2. is d1 == d2? if so, return BrobInt.ONE
+
+     //  3. is d1 > d2?  if so, return BrobInt.ZERO  [INTEGER ARITHMETIC!!!]
+
+     //  4. otherwise, get length of d1 and put into "n"
+
+     //  5. extract that many characters from the front of d2 and put into d3
+
+     //  6. is d1 > d3?  if so, add one to "n" and re-extract characters from d2 into d3
+
+     //  7. while "n" <= d2.toString().length()
+
+        // a. while d3 > d1:
+        //     i. subtract d1 from d3 [ gint.subtract( this ) ]
+        //    ii. add one to quotient [ q.add( BrobInt.ONE ) ]
+
+        // b. d3 now has any remainder [e.g., 56 - 37 = 19, "q" is one and d3 is 19]
+
+        // c. if "n++" is equal to d1.toString().length() then we are done -- break
+
+        // d. multiply d3 by 10 using d3.multiply( BrobInt.TEN )
+
+        // e. multiply "q" by 10 using q.multiply( BrobInt.TEN )
+
+        // f. extract next digit from d2 using d2.toString().substring( n-1, n )
+        // g. add current value of d3 to extracted digit [e.g., get "7" from d2, concat to d3 to make "197"]
+
+     //  END WHILE
+
+     //  8. return "q" value which is already a BrobInt
 
 
   /** ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -451,12 +519,44 @@ public class BrobInt {
    *  Method to compare a BrobInt passed as argument to this BrobInt
    *  @param  gint  BrobInt to add to this
    *  @return int   that is one of neg/0/pos if this BrobInt precedes/equals/follows the argument
-   *  NOTE: this method performs a lexicographical comparison using the java String "compareTo()" method
-   *        THAT was easy.....
+   *  NOTE: this method does not do a lexicographical comparison using the java String "compareTo()" method
+   *        It takes into account the length of the two numbers, and if that isn't enough it does a
+   *        character by character comparison to determine
    *  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ */
    public int compareTo( BrobInt gint ) {
-      return (internalValue.compareTo( gint.toString() ));
+
+     // handle the signs here
+      if( 1 == sign && 0 == gint.sign ) {
+         return -1;
+      } else if( 0 == sign && 1 == gint.sign ) {
+         return 1;
+      }
+
+     // the signs are the same at this point
+     // check the length and return the appropriate value
+     //   1 means this is longer than gint, hence larger
+     //  -1 means gint is longer than this, hence larger
+      if( internalValue.length() > gint.internalValue.length() ) {
+         return 1;
+      } else if( internalValue.length() < gint.internalValue.length() ) {
+         //System.out.println("k" +internalValue.length());
+         return (-1);
+
+     // otherwise, they are the same length, so compare absolute values
+      } else {
+         for( int i = 0; i < internalValue.length(); i++ ) {
+            Character a = Character.valueOf( internalValue.charAt(i) );
+            Character b = Character.valueOf( gint.internalValue.charAt(i) );
+            if( Character.valueOf(a).compareTo( Character.valueOf(b) ) > 0 ) {
+               return 1;
+            } else if( Character.valueOf(a).compareTo( Character.valueOf(b) ) < 0 ) {
+               return (-1);
+            }
+         }
+      }
+      return 0;
    }
+
 
   /** ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
    *  Method to check if a BrobInt passed as argument is equal to this BrobInt
