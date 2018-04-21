@@ -134,6 +134,21 @@ public class BrobInt {
    *  @param  gint         make the BrobInt 
    *  @return BrobInt that joins the array, reverses the number and returns a BrobInt 
    *  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ */
+   private BrobInt makeBrobIntStr(String b, int sign) {
+      StringBuffer buffer = new StringBuffer(b);
+      if (sign == 1){
+         buffer.append("-");
+      }
+      String buffStr = buffer.toString();
+      BrobInt brob = new BrobInt(buffStr);
+      return brob;
+   }
+
+   /** ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+   *  Method to return the correct representation of BrobInt 
+   *  @param  gint         make the BrobInt 
+   *  @return BrobInt that joins the array, reverses the number and returns a BrobInt 
+   *  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ */
    private BrobInt makeBrobInt(String[] b, int sign) {
       StringBuffer buffer = new StringBuffer(String.join("", b)); //makes the result array into a string
       if (b.length == 0) {
@@ -161,6 +176,20 @@ public class BrobInt {
    *  @param  gint         make the BrobInt 
    *  @return BrobInt that joins the array, reverses the number and returns a BrobInt 
    *  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ */
+   private BrobInt GetRidOfLeadingZeros(BrobInt b) {
+      StringBuffer buffer = new StringBuffer(b.toString()); 
+      String buffStr = buffer.toString();
+      int toInt = Integer.parseInt(buffStr);
+      buffStr = Integer.toString(toInt);
+      BrobInt brob = new BrobInt(buffStr);
+      return brob;
+   }
+
+   /** ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+   *  Method to return the correct representation of BrobInt 
+   *  @param  gint         make the BrobInt 
+   *  @return BrobInt that joins the array, reverses the number and returns a BrobInt 
+   *  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ */
    public BrobInt makePositiveBrobInt() {
       if (internalValue.indexOf("-") == 0) {
          BrobInt temp = new BrobInt(internalValue.substring(1));
@@ -169,25 +198,30 @@ public class BrobInt {
         return this;
       }
    }
+
    /** ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
    *  Method to return the correct representation of BrobInt 
    *  @param  gint         make the BrobInt 
    *  @return BrobInt that joins the array, reverses the number and returns a BrobInt 
    *  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ */
-   public BrobInt makeBrobIntDivide(int[] b, int sign) {
+   private BrobInt makeBrobIntDivide(String[] b, int sign) {
+      StringBuffer buffer = new StringBuffer(String.join("", b)); //makes the result array into a string
       if (b.length == 0) {
         throw new IllegalArgumentException("illegal arg");  
       }
-      String[] result = new String[b.length];
-      for (int i = 0; i < b.length; i++) {
-         result[i] = String.valueOf(b[i]);
-      }
-
-      StringBuffer buffer = new StringBuffer(String.join("", result)); //makes the result array into a string
       if (sign == 1){
          buffer.append("-");
       }
-      BrobInt brob = new BrobInt(buffer.toString());
+
+      //getting rid of the zeros in the front
+      String buffStr = buffer.toString().trim();
+      for (int i = 0, length = buffStr.length() - 1; i < length; i++) {
+         if (buffStr.charAt(i) != '0') {
+            buffStr = buffStr.substring(i);
+            break;
+         } 
+      }
+      BrobInt brob = new BrobInt(buffStr);
       return brob;
    }
 
@@ -388,15 +422,15 @@ public class BrobInt {
    *  @param  b2         BrobInt to divide this by
    *  @return BrobInt that is the dividend of this BrobInt divided by the one passed in
    *  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ */
-   public BrobInt divide( BrobInt dvs ) {
-      int[] quotient = new int[digits.length];  
-      int[] divisor = BrobInt.reverser(dvs.toArray());   //arg passed in  (d1) 
-      int[] dividend = BrobInt.reverser(digits);         //this           (d2)
-      int[] d3 = new int[digits.length + 1];   
-      String[] result = null;
+   public BrobInt divide( BrobInt dvs ) { 
+      BrobInt divisor = dvs;                //arg passed in  (d1) 
+      BrobInt dividend = this;              //this           (d2)
+      BrobInt quotient = BrobInt.ZERO; 
+      String d3 = ""; 
+      String d4 = "";   
+      String[] result = new String[this.length];
       int subVal;
       int n;
-      int q;
       int idx = 0;
       int resultSign = 0;
       int[] temp;
@@ -404,61 +438,61 @@ public class BrobInt {
       if (sign != dvs.sign()) {
          resultSign = 1;
       }
-      System.out.println("yo" + this.compareTo(dvs));
+      System.out.println("yo" + dividend.compareTo(divisor));
       if (divisor.toString() == "0" ) {
          throw new IllegalArgumentException("Are you trying to break the code??");
-      } else if (this.compareTo(dvs) == 0) {
-         result = new String[] {"1"};
-      } else if (this.compareTo(dvs) < 0) {   //d1>d2
-         result = new String[] {"0"}; 
+      } else if (dividend.compareTo(divisor) == 0) {
+         return BrobInt.ONE;
+      } else if (dividend.compareTo(divisor) < 0) {   //d1>d2
+         return BrobInt.ZERO;
       } else {
          n = divisor.length;
          System.out.println("n " +n);
-         d3 = Arrays.copyOfRange(dividend, 0, n); //extract that many characters from the front of d2 and put into d3
-         System.out.println(d3.length);
-         if (dvs.compareTo(makeBrobIntDivide(d3, 0)) > 0) { //d1>d3
+         d3 = dividend.toString().substring(0, n); //extract that many characters from the front of d2 and put into d3
+         d4 = dividend.toString().substring(0, n); 
+         System.out.println(d3);
+         if (dvs.compareTo(makeBrobIntStr(d3, 0)) > 0) { //d1>d3
             n += 1;
-            d3 = Arrays.copyOfRange(dividend, 0, n); 
-            System.out.println("d3 " + d3[0]);
-            System.out.println("d3 " + d3[1]);
+            d3 = dividend.toString().substring(0, n);
+            d4 = dividend.toString().substring(0, n); 
           }
+          System.out.println("n:     " + n);
           while (n <= dividend.toString().length()) {
-             q = 0;
-             BrobInt d3brob = new BrobInt(d3.toString());
-             while (makeBrobIntDivide(d3, 0).compareTo(dvs) > 0) {  //d3>d1  
-                String pc = makeBrobIntDivide(d3, 0).subtract(dvs).toString();
+             quotient = BrobInt.ZERO; 
+             d3 = d4;
+             System.out.println("i:     " + makeBrobIntStr(d3, 0));
+             System.out.println("i:     " + d3);
+             while (makeBrobIntStr(d3, 0).compareTo(dvs) >= 0) {  //d3>d1  
+                String pc = makeBrobIntStr(d3, 0).subtract(dvs).toString();
                 System.out.println("y.     " + pc);
                 int placehold = Integer.valueOf(pc);
                 //System.out.println("y.     " + pc);
-                int i = 0;
-                d3 = new int[digits.length + 1];
-                d3[i] = placehold;
-                System.out.println("d.     " + d3[i]);
-                i++;
+                d3 = Integer.toString(placehold);
+                System.out.println("d.     " + d3);
                 System.out.println("p" + placehold);
-                System.out.println("%%%" + d3[i]);
+                //System.out.println("%%%" + d3[i]);
                 //d3 = new int[] {Integer.parseInt(placehold)};
-                q++;
-                if (placehold <= 0) {
-                  break;
-                }
+                quotient = quotient.add(BrobInt.ONE);
+                System.out.println("q: " + quotient);
              }
-             quotient[idx] = q;
-             System.out.println(quotient[0]);
+             quotient = GetRidOfLeadingZeros(quotient);
+             result[idx] = quotient.toString();
              idx++;
-             System.out.println(d3.length);
-             d3[d3.length - 1] = 0; //same as multiplying by 10
-             quotient[idx++] = 0;
-             if (n++ == divisor.toString().length()) {
+             if (n++ == dividend.toString().length()) {
                 break;
-             }   
-             temp = Arrays.copyOfRange(dividend, n - 1, n);//add current value of d3 to extracted digit [e.g., get "7" from d2, concat to d3 to make "197"]
-             d3[d3.length - 1] += temp[0];
-             break;
+             }
+             d3 = (makeBrobIntStr(d4, 0)).subtract(GetRidOfLeadingZeros(divisor.multiply(quotient))).toString(); 
+             quotient.multiply(BrobInt.TEN);   
+             d4 = d3.concat(dividend.toString().substring(n - 1, n));//add current value of d3 to extracted digit [e.g., get "7" from d2, concat to d3 to make "197"]
+             int toInt = Integer.parseInt(d4);
+             d4 = Integer.toString(toInt);
+            System.out.println("%%%" + d4);
+             //break;
           } 
-         return makeBrobIntDivide(quotient, resultSign);
+         //return makeBrobIntDivide(quotient, resultSign);
+          System.out.println("ror " + result);
       }
-      return makeBrobInt(result, resultSign);
+      return makeBrobIntDivide(result, resultSign);
    }
 
 // for implementation, in this discussion/comment/steps:
