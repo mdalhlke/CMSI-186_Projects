@@ -298,7 +298,7 @@ public class BrobInt {
       String[] result = null;
       int sign2 = b2.sign();
       int resultSign;
-
+      
       if (sign == sign2) {
         if (sign == 0) {
            if (this.compareTo(b2) < 0) {
@@ -563,6 +563,7 @@ public class BrobInt {
    *  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ */
    public String toString() {
       return internalValue;
+
    }
 
   /** ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -587,9 +588,9 @@ public class BrobInt {
       /*b3 = b1.add(b2);
       System.out.println(b3.toString());*/
       b3 = b1.divide(b2);
-      //b3 = b1.reverser(b2);
+    //b3 = b1.reverser(b2);
       System.out.println(b3.toString());
+
       System.exit( 0 );
    }
 }
-
