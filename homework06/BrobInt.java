@@ -137,7 +137,7 @@ public class BrobInt {
    private BrobInt makeBrobIntStr(String b, int sign) {
       StringBuffer buffer = new StringBuffer(b);
       if (sign == 1){
-         buffer.append("-");
+         buffer.insert(0, '-');
       }
       String buffStr = buffer.toString();
       BrobInt brob = new BrobInt(buffStr);
@@ -172,7 +172,7 @@ public class BrobInt {
    }
 
    /** ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-   *  Method to return a BrobInt 
+   *  Method to return the correct representation of BrobInt 
    *  @param  b         make the BrobInt 
    *  @return BrobInt with the leading number of zeros gone
    *  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ */
@@ -201,8 +201,8 @@ public class BrobInt {
 
    /** ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
    *  Method to return the correct representation of BrobInt 
-   *  @param  gint         make the BrobInt 
-   *  @return BrobInt that joins the array, reverses the number and returns a BrobInt 
+   *  @param  b and sigb         make the BrobInt 
+   *  @return BrobInt that joins the array, and returns a BrobInt 
    *  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ */
    private BrobInt makeBrobIntDivide(String[] b, int sign) {
       StringBuffer buffer = new StringBuffer(String.join("", b)); //makes the result array into a string
@@ -210,7 +210,7 @@ public class BrobInt {
         throw new IllegalArgumentException("illegal arg");  
       }
       if (sign == 1){
-         buffer.append("-");
+         buffer.insert(0, '-');
       }
 
       //getting rid of the zeros in the front
@@ -277,7 +277,7 @@ public class BrobInt {
   /** ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
    *  Method to compare BrobInts of abs value
    *  @param  b         BrobInt to compare
-   *  @return BrobInt that is compared to another -> positve 
+   *  @return BrobInt that is compared to another -> positve
    *  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ */
    private int compareAbsValue( BrobInt b ) {
       BrobInt b1 = this.makePositiveBrobInt();
@@ -287,7 +287,7 @@ public class BrobInt {
 
   /** ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
    *  Method to subtract the value of a BrobIntk passed as argument to this BrobInt using int array
-   *  @param  gint         BrobInt to subtract from this
+   *  @param  b2         BrobInt to subtract from this
    *  @return BrobInt that is the difference of the value of this BrobInt and the one passed in
    *  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ */
    public BrobInt subtract( BrobInt b2 ) {
@@ -298,7 +298,8 @@ public class BrobInt {
       String[] result = null;
       int sign2 = b2.sign();
       int resultSign;
-
+      
+      //this.compareAbsValue(b2);
       if (sign == sign2) {
         if (sign == 0) {
            if (this.compareTo(b2) < 0) {
@@ -351,7 +352,7 @@ public class BrobInt {
 
   /** ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
    *  Method to multiply the value of a BrobIntk passed as argument to this BrobInt
-   *  @param  gint         BrobInt to multiply by this
+   *  @param  b2         BrobInt to multiply by this
    *  @return BrobInt that is the product of the value of this BrobInt and the one passed in
    *  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ */
    public BrobInt multiply( BrobInt b2 ) {
@@ -422,8 +423,8 @@ public class BrobInt {
    *  @return BrobInt that is the dividend of this BrobInt divided by the one passed in
    *  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ */
    public BrobInt divide( BrobInt dvs ) { 
-      BrobInt divisor = dvs;                //arg passed in  (d1) 
-      BrobInt dividend = this;              //this           (d2)
+      BrobInt divisor = dvs.makePositiveBrobInt();           //arg passed in  (d1) 
+      BrobInt dividend = this.makePositiveBrobInt();         //this           (d2)
       BrobInt quotient = BrobInt.ZERO; 
       String d3 = ""; 
       String d4 = "";   
@@ -447,7 +448,7 @@ public class BrobInt {
          n = divisor.length;
          d3 = dividend.toString().substring(0, n); //extract that many characters from the front of d2 and put into d3
          d4 = dividend.toString().substring(0, n); 
-         if (dvs.compareTo(makeBrobIntStr(d3, 0)) > 0) { //d1>d3
+         if (divisor.compareTo(makeBrobIntStr(d3, 0)) > 0) { //d1>d3
             n += 1;
             d3 = dividend.toString().substring(0, n);
             d4 = dividend.toString().substring(0, n); 
@@ -455,8 +456,8 @@ public class BrobInt {
           while (n <= dividend.toString().length()) {
              quotient = BrobInt.ZERO; 
              d3 = d4;
-             while (makeBrobIntStr(d3, 0).compareTo(dvs) >= 0) {  //d3>d1  
-                String pc = makeBrobIntStr(d3, 0).subtract(dvs).toString();
+             while (makeBrobIntStr(d3, 0).compareTo(divisor) >= 0) {  //d3>d1  
+                String pc = makeBrobIntStr(d3, 0).subtract(divisor).toString();
                 int placehold = Integer.valueOf(pc);
                 d3 = Integer.toString(placehold);
                 quotient = quotient.add(BrobInt.ONE);
@@ -465,6 +466,7 @@ public class BrobInt {
              result[idx] = quotient.toString();
              idx++;
              if (n++ == dividend.toString().length()) {
+                result = Arrays.copyOfRange(result, 0, idx);
                 break;
              }
              d3 = (makeBrobIntStr(d4, 0)).subtract(GetRidOfLeadingZeros(divisor.multiply(quotient))).toString(); 
@@ -477,12 +479,13 @@ public class BrobInt {
       return makeBrobIntDivide(result, resultSign);
    }
 
+
   /** ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
    *  Method to get the remainder of division of this BrobInt by the one passed as argument
-   *  @param  gint         BrobInt to divide this one by
+   *  @param  b2         BrobInt to divide this one by
    *  @return BrobInt that is the remainder of division of this BrobInt by the one passed in
    *  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ */
-   public BrobInt remainder( BrobInt gint ) {
+   public BrobInt remainder( BrobInt b2 ) {
       throw new UnsupportedOperationException( "\n         Sorry, that operation is not yet implemented." );
    }
 
@@ -510,7 +513,6 @@ public class BrobInt {
       if( internalValue.length() > gint.internalValue.length() ) {
          return 1;
       } else if( internalValue.length() < gint.internalValue.length() ) {
-         //System.out.println("k" +internalValue.length());
          return (-1);
 
      // otherwise, they are the same length, so compare absolute values
@@ -561,7 +563,14 @@ public class BrobInt {
    *  @return String  which is the String representation of this BrobInt
    *  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ */
    public String toString() {
+      /*String byteVersionOutput = "";
+      for( int i = 0; i < byteVersion.length; i++ ) {
+         byteVersionOutput = byteVersionOutput.concat( Byte.toString( byteVersion[i] ) );
+      }
+      byteVersionOutput = new String( new StringBuffer( byteVersionOutput ).reverse() );
+      return internalValue;*/
       return internalValue;
+
    }
 
   /** ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -592,6 +601,4 @@ public class BrobInt {
       System.exit( 0 );
    }
 }
-
-
 
