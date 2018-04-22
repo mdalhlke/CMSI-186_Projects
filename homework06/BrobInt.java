@@ -131,8 +131,8 @@ public class BrobInt {
 
    /** ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
    *  Method to return the correct representation of BrobInt 
-   *  @param  gint         make the BrobInt 
-   *  @return BrobInt that joins the array, reverses the number and returns a BrobInt 
+   *  @param  b and sign         make the BrobInt 
+   *  @return BrobInt that turns a string into a BrobInt
    *  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ */
    private BrobInt makeBrobIntStr(String b, int sign) {
       StringBuffer buffer = new StringBuffer(b);
@@ -146,7 +146,7 @@ public class BrobInt {
 
    /** ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
    *  Method to return the correct representation of BrobInt 
-   *  @param  gint         make the BrobInt 
+   *  @param  b and sign         make the BrobInt 
    *  @return BrobInt that joins the array, reverses the number and returns a BrobInt 
    *  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ */
    private BrobInt makeBrobInt(String[] b, int sign) {
@@ -172,9 +172,9 @@ public class BrobInt {
    }
 
    /** ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-   *  Method to return the correct representation of BrobInt 
-   *  @param  gint         make the BrobInt 
-   *  @return BrobInt that joins the array, reverses the number and returns a BrobInt 
+   *  Method to return a BrobInt 
+   *  @param  b         make the BrobInt 
+   *  @return BrobInt with the leading number of zeros gone
    *  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ */
    private BrobInt GetRidOfLeadingZeros(BrobInt b) {
       StringBuffer buffer = new StringBuffer(b.toString()); 
@@ -187,8 +187,8 @@ public class BrobInt {
 
    /** ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
    *  Method to return the correct representation of BrobInt 
-   *  @param  gint         make the BrobInt 
-   *  @return BrobInt that joins the array, reverses the number and returns a BrobInt 
+   *  @param  none         make the BrobInt 
+   *  @return BrobInt that returns a positive BrobInt  
    *  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ */
    public BrobInt makePositiveBrobInt() {
       if (internalValue.indexOf("-") == 0) {
@@ -227,8 +227,8 @@ public class BrobInt {
 
    /** ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
    *  Method to return the correct representation of BrobInt 
-   *  @param  gint         make the BrobInt 
-   *  @return BrobInt that joins the array, reverses the number and returns a BrobInt 
+   *  @param  none         make the BrobInt 
+   *  @return BrobInt that returns a negative BrobInt
    *  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ */
    public BrobInt makeNegativeBrobInt() {
       if (internalValue.indexOf("-") == 0) {
@@ -242,7 +242,7 @@ public class BrobInt {
 
   /** ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
    *  Method to add the value of a BrobIntk passed as argument to this BrobInt using int array
-   *  @param  gint         BrobInt to add to this
+   *  @param  b2         BrobInt to add to this
    *  @return BrobInt that is the sum of the value of this BrobInt and the one passed in
    *  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ */
    public BrobInt add( BrobInt b2 ) {
@@ -275,9 +275,9 @@ public class BrobInt {
    }
 
   /** ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-   *  Method to subtract the value of a BrobIntk passed as argument to this BrobInt using int array
-   *  @param  gint         BrobInt to subtract from this
-   *  @return BrobInt that is the difference of the value of this BrobInt and the one passed in
+   *  Method to compare BrobInts of abs value
+   *  @param  b         BrobInt to compare
+   *  @return BrobInt that is compared to another -> positve 
    *  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ */
    private int compareAbsValue( BrobInt b ) {
       BrobInt b1 = this.makePositiveBrobInt();
@@ -298,8 +298,7 @@ public class BrobInt {
       String[] result = null;
       int sign2 = b2.sign();
       int resultSign;
-      
-      //this.compareAbsValue(b2);
+
       if (sign == sign2) {
         if (sign == 0) {
            if (this.compareTo(b2) < 0) {
@@ -438,7 +437,6 @@ public class BrobInt {
       if (sign != dvs.sign()) {
          resultSign = 1;
       }
-      System.out.println("yo" + dividend.compareTo(divisor));
       if (divisor.toString() == "0" ) {
          throw new IllegalArgumentException("Are you trying to break the code??");
       } else if (dividend.compareTo(divisor) == 0) {
@@ -447,33 +445,21 @@ public class BrobInt {
          return BrobInt.ZERO;
       } else {
          n = divisor.length;
-         System.out.println("n " +n);
          d3 = dividend.toString().substring(0, n); //extract that many characters from the front of d2 and put into d3
          d4 = dividend.toString().substring(0, n); 
-         System.out.println(d3);
          if (dvs.compareTo(makeBrobIntStr(d3, 0)) > 0) { //d1>d3
             n += 1;
             d3 = dividend.toString().substring(0, n);
             d4 = dividend.toString().substring(0, n); 
           }
-          System.out.println("n:     " + n);
           while (n <= dividend.toString().length()) {
              quotient = BrobInt.ZERO; 
              d3 = d4;
-             System.out.println("i:     " + makeBrobIntStr(d3, 0));
-             System.out.println("i:     " + d3);
              while (makeBrobIntStr(d3, 0).compareTo(dvs) >= 0) {  //d3>d1  
                 String pc = makeBrobIntStr(d3, 0).subtract(dvs).toString();
-                System.out.println("y.     " + pc);
                 int placehold = Integer.valueOf(pc);
-                //System.out.println("y.     " + pc);
                 d3 = Integer.toString(placehold);
-                System.out.println("d.     " + d3);
-                System.out.println("p" + placehold);
-                //System.out.println("%%%" + d3[i]);
-                //d3 = new int[] {Integer.parseInt(placehold)};
                 quotient = quotient.add(BrobInt.ONE);
-                System.out.println("q: " + quotient);
              }
              quotient = GetRidOfLeadingZeros(quotient);
              result[idx] = quotient.toString();
@@ -486,59 +472,10 @@ public class BrobInt {
              d4 = d3.concat(dividend.toString().substring(n - 1, n));//add current value of d3 to extracted digit [e.g., get "7" from d2, concat to d3 to make "197"]
              int toInt = Integer.parseInt(d4);
              d4 = Integer.toString(toInt);
-            System.out.println("%%%" + d4);
-             //break;
           } 
-         //return makeBrobIntDivide(quotient, resultSign);
-          System.out.println("ror " + result);
       }
       return makeBrobIntDivide(result, resultSign);
    }
-
-// for implementation, in this discussion/comment/steps:
-     //  0. divisor [passed in as ARGUMENT] is "d1"
-     //     dividend [ME] is "d2"
-     //     current dividend being handled is "d3"
-     //     quotient is "q" and string length count is "n"
-     //        for example, 56789 divided by 37: d1 == 37 and d2 == 56789
-     //                     d3 starts with 56 and goes on adding single digits with each iteration
-     //                     "q" starts at zero, and "n" starts at 2
-
-     //  1. is d1 == 0?  if so, throw IllegalArgumentException
-     //  IF ARGUMENT is equal to BrobInt.ZERO
-     //     throw new IllegalArgumentException
-
-     //  2. is d1 == d2? if so, return BrobInt.ONE
-
-     //  3. is d1 > d2?  if so, return BrobInt.ZERO  [INTEGER ARITHMETIC!!!]
-
-     //  4. otherwise, get length of d1 and put into "n"
-
-     //  5. extract that many characters from the front of d2 and put into d3
-
-     //  6. is d1 > d3?  if so, add one to "n" and re-extract characters from d2 into d3
-
-     //  7. while "n" <= d2.toString().length()
-
-        // a. while d3 > d1:
-        //     i. subtract d1 from d3 [ gint.subtract( this ) ]
-        //    ii. add one to quotient [ q.add( BrobInt.ONE ) ]
-
-        // b. d3 now has any remainder [e.g., 56 - 37 = 19, "q" is one and d3 is 19]
-
-        // c. if "n++" is equal to d1.toString().length() then we are done -- break
-
-        // d. multiply d3 by 10 using d3.multiply( BrobInt.TEN )
-
-        // e. multiply "q" by 10 using q.multiply( BrobInt.TEN )
-
-        // f. extract next digit from d2 using d2.toString().substring( n-1, n )
-        // g. add current value of d3 to extracted digit [e.g., get "7" from d2, concat to d3 to make "197"]
-
-     //  END WHILE
-
-     //  8. return "q" value which is already a BrobInt
-
 
   /** ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
    *  Method to get the remainder of division of this BrobInt by the one passed as argument
@@ -624,14 +561,7 @@ public class BrobInt {
    *  @return String  which is the String representation of this BrobInt
    *  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ */
    public String toString() {
-      /*String byteVersionOutput = "";
-      for( int i = 0; i < byteVersion.length; i++ ) {
-         byteVersionOutput = byteVersionOutput.concat( Byte.toString( byteVersion[i] ) );
-      }
-      byteVersionOutput = new String( new StringBuffer( byteVersionOutput ).reverse() );
-      return internalValue;*/
       return internalValue;
-
    }
 
   /** ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
