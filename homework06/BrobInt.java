@@ -298,8 +298,7 @@ public class BrobInt {
       String[] result = null;
       int sign2 = b2.sign();
       int resultSign;
-      
-      //this.compareAbsValue(b2);
+
       if (sign == sign2) {
         if (sign == 0) {
            if (this.compareTo(b2) < 0) {
@@ -486,7 +485,8 @@ public class BrobInt {
    *  @return BrobInt that is the remainder of division of this BrobInt by the one passed in
    *  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ */
    public BrobInt remainder( BrobInt b2 ) {
-      throw new UnsupportedOperationException( "\n         Sorry, that operation is not yet implemented." );
+      //remainder = dividend - multiply(dividend.divide(divisor),divisor)
+      return GetRidOfLeadingZeros(this.subtract(b2.multiply(this.divide(b2))));
    }
 
   /** ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -530,7 +530,6 @@ public class BrobInt {
       return 0;
    }
 
-
   /** ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
    *  Method to check if a BrobInt passed as argument is equal to this BrobInt
    *  @param  gint     BrobInt to compare to this
@@ -563,14 +562,7 @@ public class BrobInt {
    *  @return String  which is the String representation of this BrobInt
    *  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ */
    public String toString() {
-      /*String byteVersionOutput = "";
-      for( int i = 0; i < byteVersion.length; i++ ) {
-         byteVersionOutput = byteVersionOutput.concat( Byte.toString( byteVersion[i] ) );
-      }
-      byteVersionOutput = new String( new StringBuffer( byteVersionOutput ).reverse() );
-      return internalValue;*/
       return internalValue;
-
    }
 
   /** ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -595,9 +587,8 @@ public class BrobInt {
       /*b3 = b1.add(b2);
       System.out.println(b3.toString());*/
       b3 = b1.divide(b2);
-    //b3 = b1.reverser(b2);
+      //b3 = b1.reverser(b2);
       System.out.println(b3.toString());
-
       System.exit( 0 );
    }
 }
