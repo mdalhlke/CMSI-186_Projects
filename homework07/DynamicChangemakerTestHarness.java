@@ -398,12 +398,13 @@ public class DynamicChangemakerTestHarness {
       try {
          Tuple result = DynamicChangeMaker.makeChangeWithDynamicProgramming( badDenominations, 2345 );
          System.out.print( "           which is: " );
-         displaySuccessIfTrue( result.toString().contains( "Impossible" ) ) ;
+         //displaySuccessIfTrue(  "BAD DATA: negative argument not possible".equals( result.toString() ) ) ;
+         displayFailure();
       }
       catch( Exception e ) {
-         //displaySuccessIfTrue( false );  
          e.printStackTrace();
-         displayFailure();
+         displaySuccessIfTrue( true );
+         //displayFailure();
       }
    }
 
@@ -416,14 +417,16 @@ public class DynamicChangemakerTestHarness {
       System.out.println( "          expecting: BAD DATA and a message: " );
       System.out.print  ( "            and got: " );
       try {
+         //we expect it to throw an exception so it should fall through into the catch 
          Tuple result = DynamicChangeMaker.makeChangeWithDynamicProgramming( badDenominations, 2345 );
          System.out.print( "           which is: " );
-         displaySuccessIfTrue( result.toString().contains( "Impossible" ) ) ;
+         //displaySuccessIfTrue(  "Impossible tuple".equals( result.toString() ) ) ;
+         displayFailure();
       }
       catch( Exception e ) {
-         //displaySuccessIfTrue( false );
          e.printStackTrace();
-         displayFailure();
+         displaySuccessIfTrue( true );
+         //displayFailure();
       }
    }
 
@@ -436,14 +439,16 @@ public class DynamicChangemakerTestHarness {
       System.out.println( "          expecting: BAD DATA and a message: " );
       System.out.print  ( "            and got: " );
       try {
+         //we expect it to throw an exception so it should fall through into the catch
          Tuple result = DynamicChangeMaker.makeChangeWithDynamicProgramming( badDenominations, 2345 );
          System.out.print( "           which is: " );
-         displaySuccessIfTrue( result.toString().contains( "Impossible" ) ) ;
+         //displaySuccessIfTrue(  "Impossible tuple".equals( result.toString() ) ) ;
+         displayFailure();
       }
       catch( Exception e ) {
-         //displaySuccessIfTrue( false );
          e.printStackTrace();
-         displayFailure();
+         displaySuccessIfTrue( true );
+         //displayFailure();
       }
    }
 
@@ -456,14 +461,16 @@ public class DynamicChangemakerTestHarness {
       System.out.println( "          expecting: BAD DATA and a message: " );
       System.out.print  ( "            and got: " );
       try {
+         //we expect it to throw an exception so it should fall through into the catch
          Tuple result = DynamicChangeMaker.makeChangeWithDynamicProgramming( badDenominations, -2345 );
          System.out.print( "           which is: " );
-         displaySuccessIfTrue( result.toString().contains( "Impossible tuple" ) ) ;
+         //displaySuccessIfTrue(  "Impossible tuple".equals( result.toString() ) ) ;
+         displayFailure();
       }
       catch( Exception e ) {
-         //displaySuccessIfTrue( false );
          e.printStackTrace();
-         displayFailure();
+         displaySuccessIfTrue( true );
+         //displayFailure();
       }
    }
 
