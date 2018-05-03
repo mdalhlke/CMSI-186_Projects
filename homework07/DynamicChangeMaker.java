@@ -37,10 +37,14 @@ public class DynamicChangeMaker {
             }
          }
          if (value.length <= 1) {
-            throw new IllegalArgumentException("BAD DATA: not enough arguments.");
+         	System.out.println("BAD DATA: not enough arguments.");
+         	break;
+            //throw new IllegalArgumentException("BAD DATA: not enough arguments.");
          }
          if (value[i] < 0) {
-            throw new IllegalArgumentException("BAD DATA: negative argument not possible.");
+         	System.out.println("BAD DATA: negative argument not possible.");
+         	break;
+            //throw new IllegalArgumentException("BAD DATA: negative argument not possible.");
          }
          if (value[i] == 0) {
             throw new IllegalArgumentException("BAD DATA: arguments contain nonsensical denomination of zero.");
@@ -55,6 +59,9 @@ public class DynamicChangeMaker {
    *  @throws  IllegalArgumentException 
    *  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ */
    public boolean validateArgTarget(int value) {
+      if (value < 0) {
+         throw new IllegalArgumentException("BAD DATA: negative argument not possible.");
+      }
       return true;
    }
 
@@ -77,8 +84,8 @@ public class DynamicChangeMaker {
       int rowCount = this.denoms.length;
       int columnCount = this.target + 1; 
       Tuple ttable[][] = new Tuple[rowCount][columnCount];
-      for (int i = 0; i < rowCount; i++) {       //i = 0
-         for (int j = 0; j < columnCount; j++) { //j = 3
+      for (int i = 0; i < rowCount; i++) {       
+         for (int j = 0; j < columnCount; j++) { 
          	Tuple t1 = new Tuple(rowCount);
          	Tuple t2 = new Tuple(rowCount);
          	Tuple tempResult = new Tuple(rowCount); 
@@ -90,16 +97,11 @@ public class DynamicChangeMaker {
                   t1.setElement(i, 1); 
                }
                int lookBack = j - denoms[i];
-               //System.out.println("lb:" + lookBack);
-               //System.out.println("i:" + i);
                if (lookBack < 0){
                   //t2 = Tuple.IMPOSSIBLE;
                } else {
-               	   //System.out.println(ttable[i][lookBack]);
                   t2 = ttable[i][lookBack]; 
                } 
-               //System.out.println(t1);
-               //System.out.println(t2);
                tempResult = t1.add(t2);
                //check if ripple down is needed
                if ((i - 1) >= 0 && !ttable[i - 1][j].isImpossible()){
@@ -109,23 +111,9 @@ public class DynamicChangeMaker {
                }
             }
             ttable[i][j] = tempResult; 
-           // System.out.println("i: " + i + " j: " + j + " tt: " + ttable[i][j]);
          }
       }
-      int answer = ttable[0][columnCount - 1].total(); 
-      Tuple answerTuple = ttable[0][columnCount - 1]; 
-      //System.out.println(answer);
-      for (int i = 1; i < rowCount; i++){
-         if (answer > ttable[i][columnCount - 1].total() || answer == 0) { 
-            answer = ttable[i][columnCount - 1].total(); 
-            answerTuple = ttable[i][columnCount - 1];   
-         } 
-         //System.out.println(ttable[i][columnCount - 1]);
-         //System.out.println(i);
-         //System.out.println(columnCount - 1);
-
-      }
-      System.out.println(answerTuple);
+      Tuple answerTuple = ttable[rowCount - 1][columnCount - 1]; 
       return answerTuple;
    }
             
@@ -147,64 +135,3 @@ public class DynamicChangeMaker {
    }
 
 }
-
-
-/**************************************
-            if( j == 0 ) {
-               // Otherwise, this is NOT column zero
-            } else {
-               // if we can't take one of the denominations out of the value of "j"
-               //  impossible, at least temporarily
-               if( some_check_to_see_if_we_can_take_ONE_thing_out_of_the_current_value ) {
-
-                 // look backward to see if there is a valid/impossible solution
-                 //  if there is, copy it over and add/replace the one that is there
-                  if( some_check_to_see_if_we_are_ABLE_to_look_backwards ) {
-
-                    // if the cell looking backward is NOT an "IMPOSSIBLE", add it
-                    if (c != "IMPOSSIBLE") {
-
-                  }
-
-                 // if this is NOT row zero we need to look above to see if there is
-                 //  a better/non-impossible solution; if so, copy it down
-                  if( i != 0 ) {
-
-                    // if the cell above is impossible, basically do nothing since
-                    //  this the current cell is already IMPOSSIBLE
-
-                    // else if the cell above has a total that is less than the current
-                    //  cell, copy it down
-                     }
-                  }
-
-              // ELSE -- we *CAN* take one current denomination out
-               } else {
-
-                 // make a new tuple with a one in the current demonimation index
-
-
-                 // look backward to see if there is a valid/impossible solution
-                  if( (j - denominations[i]) >= 0 ) {
-
-                    // if it's IMPOSSIBLE, mark the current cell IMPOSSIBLE, too
-
-                    // else, add the previous cell to the current cell
-                  }
-
-                 // if this is NOT row zero we need to look above to see if there is
-                 //  a better/non-impossible solution; if so, copy it down
-                  if( i != 0 ) {
-
-                    // if the cell above is impossible, basically do nothing since
-                    //  this the current cell is already IMPOSSIBLE
-
-                    // else if the cell above has a total that is less than the current
-                    //  cell, copy it down
-                     }
-                  }
-               }
-            }
-         }
-****/
-
