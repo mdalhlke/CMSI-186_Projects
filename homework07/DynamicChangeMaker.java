@@ -47,7 +47,7 @@ public class DynamicChangeMaker {
                throw new IllegalArgumentException("BAD DATA: arguments contain copies of a coin.");
             }
          }
-
+       
          if (values.length <= 1) {
             throw new IllegalArgumentException("BAD DATA: not enough arguments.");
          }
