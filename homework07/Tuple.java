@@ -82,7 +82,7 @@ public class Tuple {
    * @return whether the tuple is imposible
    */
    public boolean isImpossible() {
-      return this == IMPOSSIBLE;
+      return this.equals(IMPOSSIBLE);
    }
 
   /**
@@ -128,7 +128,6 @@ public class Tuple {
       for( int i = 0; i < length(); i++ ) {
          sum = sum + getElement( i );
       }
-
       return sum;
    }
 
@@ -140,6 +139,10 @@ public class Tuple {
    * @return the element-wise sum of this and t
    */
    public Tuple add( Tuple t ) {
+      
+      if (this.isImpossible() || t.isImpossible()){
+         return IMPOSSIBLE;
+      }
 
       if( length() != t.length()) {
          throw new IllegalArgumentException();
@@ -149,12 +152,12 @@ public class Tuple {
       for( int i = 0; i < length(); i++ ) {
          sum.setElement(i, getElement( i ) + t.getElement( i ) );
       }
-
+       
       return sum;
    }
 
   /**
-   * Returns true iff this tuple is value-identical to t.
+   * Returns true if this tuple is value-identical to t.
    *
    * @param t  the object (presumably a Tuple) to check for equality
    *
